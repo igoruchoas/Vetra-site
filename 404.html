@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Página não encontrada · Vetra</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#07090D">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+:root { --bg: #07090D; --text: #EEF1F5; --muted: #8B95A7; --dim: #5A6375; --line: rgba(255,255,255,.09); --line2: rgba(255,255,255,.16); --ceu: #4DB5FF; --ceu-l: #9BDAFF; --ease: cubic-bezier(.2,.7,.1,1); --pad: clamp(20px, 4.5vw, 64px); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: var(--bg); }
+body { color: var(--text); font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; overflow-x: clip; }
+a { color: inherit; text-decoration: none; }
+.bg { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(60% 50% at 50% 38%, rgba(77,181,255,.12), transparent 70%); }
+.dots { position: fixed; inset: 0; pointer-events: none; opacity: .35; background-image: radial-gradient(rgba(155,218,255,.5) 1px, transparent 1.4px); background-size: 34px 34px; -webkit-mask: radial-gradient(60% 60% at 50% 45%, #000, transparent 75%); mask: radial-gradient(60% 60% at 50% 45%, #000, transparent 75%); }
+header { position: relative; padding: 22px var(--pad); display: flex; justify-content: space-between; align-items: center; }
+.brand { display: inline-flex; align-items: center; gap: 10px; }
+.brand svg { width: 30px; height: 30px; }
+.brand span { font-weight: 800; font-size: 25px; letter-spacing: -.055em; }
+.brand span i { display: inline-block; width: .19em; height: .19em; border-radius: 50%; background: var(--ceu); margin-left: .06em; }
+.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+header .mono { font-size: 13px; color: var(--muted); }
+main { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 26px; padding: 20px var(--pad) 60px; }
+.code { display: flex; align-items: center; gap: clamp(6px, 2vw, 20px); font-weight: 800; font-size: clamp(120px, 26vw, 300px); letter-spacing: -.07em; line-height: .8; }
+.code > span { background: linear-gradient(180deg, #fff 25%, #8F99A6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pointer { width: .78em; height: .78em; position: relative; }
+.pointer svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 20px 50px rgba(77,181,255,.45)); transform: rotate(var(--a, 0deg)); transition: transform .25s linear; }
+.pointer.search svg { animation: search 4.5s var(--ease) infinite; }
+@keyframes search { 0% { transform: rotate(0); } 18% { transform: rotate(-58deg); } 36% { transform: rotate(40deg); } 54% { transform: rotate(-150deg); } 72% { transform: rotate(-20deg); } 86%, 100% { transform: rotate(0); } }
+h1 { margin: 0; font-weight: 800; font-size: clamp(36px, 5.6vw, 76px); letter-spacing: -.045em; line-height: 1; max-width: 13em; }
+h1 em { font-style: normal; color: var(--ceu); }
+p { margin: 0; color: #AEB6C2; font-size: 18px; line-height: 1.55; max-width: 32em; }
+.term { font-size: 14px; color: var(--muted); padding: 12px 18px; border-radius: 12px; background: rgba(255,255,255,.04); box-shadow: 0 0 0 1px var(--line) inset; text-align: left; }
+.term b { color: var(--ceu); font-weight: 400; }
+.term .caret { display: inline-block; width: 8px; height: 16px; background: var(--ceu); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.ctas { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; height: 54px; padding: 0 26px; border-radius: 999px; font-weight: 700; font-size: 16px; transition: transform .3s var(--ease), box-shadow .3s; }
+.btn svg { width: 18px; height: 18px; }
+.btn--sky { background: linear-gradient(180deg, #7CC8FF, var(--ceu)); color: #04121F; box-shadow: 0 10px 40px -10px rgba(77,181,255,.7); }
+.btn--sky:hover { transform: translateY(-2px); box-shadow: 0 14px 50px -8px rgba(77,181,255,.95); }
+.btn--line { color: var(--text); box-shadow: 0 0 0 1px var(--line2) inset; background: rgba(255,255,255,.04); }
+.btn--line:hover { background: rgba(255,255,255,.09); }
+.links { display: flex; gap: 8px 22px; flex-wrap: wrap; justify-content: center; font-size: 14px; color: var(--muted); }
+.links a:hover { color: var(--ceu); }
+footer { position: relative; padding: 20px var(--pad) calc(24px + env(safe-area-inset-bottom)); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--dim); }
+:focus-visible { outline: 2px solid var(--ceu); outline-offset: 3px; border-radius: 8px; }
+@media (prefers-reduced-motion: reduce) { .pointer.search svg { animation: none; } .term .caret { animation: none; } }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<div class="dots" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#D3D8DE"/><stop offset=".7" stop-color="#F1F3F5"/><stop offset="1" stop-color="#9AA3AE"/></linearGradient>
+    <linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BDAFF"/><stop offset=".55" stop-color="#4DB5FF"/><stop offset="1" stop-color="#1F8FE6"/></linearGradient>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <path d="M36 20 L6 50 L47 91 L47 75.44 L21.56 50 L43.78 27.78 Z" fill="url(#gP)"/>
+      <path d="M53 9 L94 50 L53 91 Z M64 35.56 L78.44 50 L64 64.44 Z" fill-rule="evenodd" fill="url(#gC)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <a class="brand" href="/" aria-label="Vetra, página inicial"><svg aria-hidden="true"><use href="#mark"/></svg><span>vetra<i></i></span></a>
+  <span class="mono">erro 404</span>
+</header>
+
+<main>
+  <div class="code" aria-hidden="true"><span>4</span><span class="pointer search" id="pointer"><svg viewBox="0 0 100 100"><use href="#mark"/></svg></span><span>4</span></div>
+  <h1>Você saiu da <em>direção certa.</em></h1>
+  <p>Esta página não existe ou mudou de lugar. Mas fica tranquilo: a gente te coloca no caminho de novo.</p>
+  <div class="term mono" aria-hidden="true"><b>$</b> <span id="typed"></span><span class="caret"></span></div>
+  <div class="ctas">
+    <a class="btn btn--sky" href="/">Voltar para o início <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a class="btn btn--line" href="https://wa.me/5535997183927?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Vetra." target="_blank" rel="noopener">Falar no WhatsApp</a>
+  </div>
+  <nav class="links" aria-label="Atalhos">
+    <a href="/#servicos">Serviços</a><a href="/#cases">Na prática</a><a href="/#planos">Planos</a><a href="/#orcamento">Orçamento</a><a href="/#contato">Contato</a>
+  </nav>
+</main>
+
+<footer>
+  <span>© <span id="ano">2026</span> Vetra</span>
+  <span class="mono">Tecnologia com direção.</span>
+</footer>
+
+<script src="/assets/js/404.js"></script>
+</body>
+</html>

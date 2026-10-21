@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Política de Privacidade · Vetra</title>
+<meta name="description" content="Como a Vetra trata os seus dados pessoais, de acordo com a Lei Geral de Proteção de Dados (LGPD).">
+<meta name="theme-color" content="#07090D">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/schibsted-grotesk-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root { --bg: #07090D; --text: #EEF1F5; --body: #B7BFCB; --muted: #8B95A7; --dim: #5A6375; --line: rgba(255,255,255,.09); --line2: rgba(255,255,255,.16); --ceu: #4DB5FF; --ease: cubic-bezier(.2,.7,.1,1); --pad: clamp(20px, 4.5vw, 64px); }
+* { box-sizing: border-box; }
+html { background: var(--bg); scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: var(--ceu); text-underline-offset: 3px; }
+.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+.glow { position: fixed; inset: 0 0 auto; height: 70vh; pointer-events: none; background: radial-gradient(60% 70% at 50% 0%, rgba(77,181,255,.1), transparent 70%); }
+header { position: sticky; top: 0; z-index: 5; padding: 14px var(--pad); background: rgba(7,9,13,.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.bar { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+.brand svg { width: 28px; height: 28px; }
+.brand span { font-weight: 800; font-size: 24px; letter-spacing: -.055em; line-height: 1; }
+.brand span i { display: inline-block; width: .19em; height: .19em; border-radius: 50%; background: var(--ceu); margin-left: .06em; }
+.back { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; box-shadow: 0 0 0 1px var(--line2) inset; background: rgba(255,255,255,.04); transition: background .2s; }
+.back:hover { background: rgba(255,255,255,.09); }
+.back svg { width: 16px; height: 16px; }
+.wrap { position: relative; max-width: 1100px; margin: 0 auto; padding: 0 var(--pad); display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 60px; }
+.hero { position: relative; max-width: 1100px; margin: 0 auto; padding: 80px var(--pad) 50px; }
+.eyebrow { font-size: 14px; color: var(--ceu); }
+h1 { margin: 14px 0 16px; font-weight: 800; font-size: clamp(44px, 7vw, 88px); letter-spacing: -.05em; line-height: .95; }
+h1 em { font-style: normal; color: var(--ceu); }
+.lede { color: var(--body); font-size: 19px; max-width: 40em; margin: 0; }
+.meta { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+.meta span { font-size: 12.5px; color: var(--muted); padding: 6px 12px; border-radius: 999px; box-shadow: 0 0 0 1px var(--line2) inset; }
+.summary { margin-top: 34px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.summary div { padding: 20px; border-radius: 18px; background: rgba(255,255,255,.035); box-shadow: 0 0 0 1px var(--line) inset; }
+.summary b { display: block; font-size: 17px; margin-bottom: 4px; }
+.summary p { margin: 0; font-size: 14.5px; color: var(--body); line-height: 1.5; }
+nav.toc { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 2px; font-size: 14px; padding-bottom: 40px; }
+nav.toc a { color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 8px; border-left: 2px solid var(--line); transition: color .2s, border-color .2s; }
+nav.toc a:hover, nav.toc a.on { color: var(--text); border-color: var(--ceu); }
+article { padding-bottom: 80px; min-width: 0; }
+section { padding: 34px 0; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+section:first-child { border-top: 0; padding-top: 0; }
+h2 { margin: 0 0 14px; font-weight: 800; font-size: 28px; letter-spacing: -.035em; line-height: 1.15; display: flex; gap: 12px; align-items: baseline; }
+h2 .n { font-family: "IBM Plex Mono", monospace; font-weight: 400; font-size: 14px; color: var(--ceu); }
+h3 { margin: 22px 0 6px; font-size: 18px; letter-spacing: -.02em; }
+article p, article li { color: var(--body); }
+article p { margin: 0 0 12px; }
+article ul { margin: 0 0 12px; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+article li { position: relative; padding-left: 22px; }
+article li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; background: var(--ceu); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+article strong { color: var(--text); font-weight: 600; }
+.table { width: 100%; border-collapse: collapse; margin: 6px 0 12px; font-size: 15px; }
+.table th, .table td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.table th { font-family: "IBM Plex Mono", monospace; font-weight: 400; font-size: 12px; color: var(--muted); }
+.table td { color: var(--body); }
+.table td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+.contact { margin-top: 10px; padding: 24px; border-radius: 20px; background: linear-gradient(160deg, rgba(77,181,255,.14), rgba(77,181,255,.02) 60%); box-shadow: 0 0 0 1px rgba(77,181,255,.35) inset; }
+.contact p:last-child { margin: 0; }
+footer { border-top: 1px solid var(--line); padding: 26px var(--pad) calc(26px + env(safe-area-inset-bottom)); }
+footer .bar { font-size: 13px; color: var(--dim); flex-wrap: wrap; }
+:focus-visible { outline: 2px solid var(--ceu); outline-offset: 3px; border-radius: 6px; }
+@media (max-width: 860px) {
+  .wrap { grid-template-columns: 1fr; gap: 0; }
+  nav.toc { display: none; }
+  .summary { grid-template-columns: 1fr; }
+  .hero { padding-top: 50px; }
+  .table, .table tbody, .table tr, .table td { display: block; }
+  .table thead { display: none; }
+  .table tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .table td { border: 0; padding: 2px 0; }
+}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#D3D8DE"/><stop offset=".7" stop-color="#F1F3F5"/><stop offset="1" stop-color="#9AA3AE"/></linearGradient>
+    <linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BDAFF"/><stop offset=".55" stop-color="#4DB5FF"/><stop offset="1" stop-color="#1F8FE6"/></linearGradient>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <path d="M36 20 L6 50 L47 91 L47 75.44 L21.56 50 L43.78 27.78 Z" fill="url(#gP)"/>
+      <path d="M53 9 L94 50 L53 91 Z M64 35.56 L78.44 50 L64 64.44 Z" fill-rule="evenodd" fill="url(#gC)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="index.html" aria-label="Vetra, página inicial"><svg aria-hidden="true"><use href="#mark"/></svg><span>vetra<i></i></span></a>
+    <a class="back" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Voltar ao site</a>
+  </div>
+</header>
+
+<div class="hero">
+  <span class="eyebrow mono">// lgpd · lei nº 13.709/2018</span>
+  <h1>Política de <em>privacidade.</em></h1>
+  <p class="lede">Explicamos aqui, sem juridiquês, quais dados o site da Vetra recebe, para que eles servem, com quem são compartilhados e como você pode pedir para acessar ou apagar os seus.</p>
+  <div class="meta"><span class="mono">Última atualização: 20 de outubro de 2026</span><span class="mono">vetra.dev.br</span></div>
+  <div class="summary">
+    <div><b>Não vendemos dados.</b><p>Nunca. Usamos só para responder você e melhorar o site.</p></div>
+    <div><b>O formulário não guarda nada.</b><p>A mensagem é montada no seu aparelho e abre no WhatsApp. Você decide se envia.</p></div>
+    <div><b>Você manda nos seus dados.</b><p>Peça acesso, correção ou exclusão pelo e-mail contato@vetra.dev.br.</p></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Nesta página">
+    <a href="#quem">1. Quem somos</a>
+    <a href="#dados">2. Dados que recebemos</a>
+    <a href="#uso">3. Para que usamos</a>
+    <a href="#base">4. Bases legais</a>
+    <a href="#compartilhamento">5. Compartilhamento</a>
+    <a href="#cookies">6. Cookies e medição</a>
+    <a href="#prazo">7. Por quanto tempo</a>
+    <a href="#direitos">8. Seus direitos</a>
+    <a href="#seguranca">9. Segurança</a>
+    <a href="#mudancas">10. Mudanças</a>
+    <a href="#contato">11. Contato</a>
+  </nav>
+
+  <article>
+    <section id="quem">
+      <h2><span class="n">01</span>Quem somos</h2>
+      <p>A <strong>Vetra</strong> desenvolve sites, sistemas e dashboards para pequenas e médias empresas. Neste site (<strong>vetra.dev.br</strong>), a Vetra é a <strong>controladora</strong> dos dados pessoais, ou seja, é quem decide como eles são tratados.</p>
+      <p>Para qualquer assunto sobre privacidade, fale com a gente pelo e-mail <a href="mailto:contato@vetra.dev.br">contato@vetra.dev.br</a>.</p>
+    </section>
+
+    <section id="dados">
+      <h2><span class="n">02</span>Dados que recebemos</h2>
+      <h3>Quando você fala com a gente</h3>
+      <p>No formulário de contato e no simulador de orçamento, você pode informar <strong>seu nome, o nome do seu negócio, o tipo de serviço que procura, o plano de interesse e uma mensagem</strong>.</p>
+      <p>Esses dados <strong>não são enviados nem armazenados pelo nosso site</strong>. Eles são organizados no seu próprio navegador e abrem uma conversa no WhatsApp com o texto pronto. A mensagem só chega até nós se você decidir enviá-la. O mesmo vale quando você nos escreve por e-mail ou pelo Instagram.</p>
+      <h3>Quando você navega pelo site</h3>
+      <ul>
+        <li><strong>Dados técnicos de acesso:</strong> endereço IP, tipo de navegador e aparelho, data e hora. São registrados automaticamente pela empresa de hospedagem, por segurança e para o site funcionar.</li>
+        <li><strong>Dados de uso:</strong> páginas visitadas, de onde veio o acesso (Google, Instagram etc.) e cliques em botões de contato, quando usamos ferramentas de medição como o Google Analytics e o Pixel da Meta (veja o item 6).</li>
+        <li><strong>Armazenamento local:</strong> guardamos no seu navegador apenas um aviso de que você já visitou o site, para pular a tela de carregamento na próxima vez. Esse aviso não identifica você.</li>
+      </ul>
+      <p>Não pedimos nem tratamos dados sensíveis (como saúde, religião ou biometria) e o site não é direcionado a menores de 18 anos.</p>
+    </section>
+
+    <section id="uso">
+      <h2><span class="n">03</span>Para que usamos</h2>
+      <ul>
+        <li>Responder o seu contato, tirar dúvidas e preparar propostas e orçamentos.</li>
+        <li>Executar o projeto contratado e prestar suporte.</li>
+        <li>Entender quais páginas e conteúdos funcionam melhor e melhorar o site.</li>
+        <li>Medir resultados de anúncios, quando houver.</li>
+        <li>Manter o site seguro e cumprir obrigações legais.</li>
+      </ul>
+    </section>
+
+    <section id="base">
+      <h2><span class="n">04</span>Bases legais</h2>
+      <p>Tratamos dados pessoais com base no artigo 7º da LGPD:</p>
+      <table class="table">
+        <thead><tr><th>Situação</th><th>Base legal</th></tr></thead>
+        <tbody>
+          <tr><td>Contato e orçamento</td><td>Procedimentos preliminares a um contrato, a pedido do titular (art. 7º, V).</td></tr>
+          <tr><td>Execução do projeto</td><td>Execução de contrato (art. 7º, V).</td></tr>
+          <tr><td>Medição e melhoria do site</td><td>Legítimo interesse (art. 7º, IX), respeitando suas expectativas e direitos, ou consentimento quando exigido.</td></tr>
+          <tr><td>Segurança e registros de acesso</td><td>Cumprimento de obrigação legal (art. 7º, II), como a guarda de registros prevista no Marco Civil da Internet.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="compartilhamento">
+      <h2><span class="n">05</span>Compartilhamento</h2>
+      <p><strong>Não vendemos nem alugamos dados pessoais.</strong> Usamos serviços de terceiros que nos ajudam a operar, e que tratam dados em nosso nome ou de acordo com as próprias políticas:</p>
+      <table class="table">
+        <thead><tr><th>Serviço</th><th>Para quê</th></tr></thead>
+        <tbody>
+          <tr><td>Vercel</td><td>Hospedagem do site.</td></tr>
+          <tr><td>WhatsApp e Instagram (Meta)</td><td>Conversas com clientes e interessados.</td></tr>
+          <tr><td>Zoho</td><td>E-mail (contato@vetra.dev.br).</td></tr>
+          <tr><td>Google Analytics</td><td>Estatísticas de visitas, quando ativado.</td></tr>
+          <tr><td>Pixel da Meta</td><td>Medição de anúncios, quando ativado.</td></tr>
+        </tbody>
+      </table>
+      <p>Alguns desses serviços têm servidores fora do Brasil, o que pode envolver transferência internacional de dados, feita conforme os artigos 33 e seguintes da LGPD. Também podemos compartilhar dados se uma autoridade competente exigir, nos termos da lei.</p>
+    </section>
+
+    <section id="cookies">
+      <h2><span class="n">06</span>Cookies e medição</h2>
+      <p>Cookies são pequenos arquivos que o site guarda no seu navegador. Ferramentas como o <strong>Google Analytics</strong> e o <strong>Pixel da Meta</strong> usam cookies e identificadores para contar visitas e entender o caminho até um contato, de forma estatística.</p>
+      <p>Você pode bloquear ou apagar cookies a qualquer momento nas configurações do seu navegador. Também pode usar o <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">complemento de desativação do Google Analytics</a> e ajustar suas <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noopener">preferências de anúncios na Meta</a>. O site continua funcionando normalmente sem eles.</p>
+    </section>
+
+    <section id="prazo">
+      <h2><span class="n">07</span>Por quanto tempo guardamos</h2>
+      <ul>
+        <li><strong>Conversas e propostas:</strong> enquanto houver relacionamento comercial e, depois, pelo tempo necessário para cumprir obrigações legais ou defender direitos.</li>
+        <li><strong>Registros de acesso:</strong> pelo prazo exigido por lei.</li>
+        <li><strong>Dados de medição:</strong> pelo período configurado em cada ferramenta.</li>
+      </ul>
+      <p>Depois desses prazos, os dados são apagados ou anonimizados.</p>
+    </section>
+
+    <section id="direitos">
+      <h2><span class="n">08</span>Seus direitos</h2>
+      <p>Pelo artigo 18 da LGPD, você pode pedir a qualquer momento:</p>
+      <ul>
+        <li>Confirmação de que tratamos seus dados e acesso a eles.</li>
+        <li>Correção de dados incompletos, inexatos ou desatualizados.</li>
+        <li>Anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desconformidade com a lei.</li>
+        <li>Portabilidade dos dados a outro fornecedor.</li>
+        <li>Eliminação dos dados tratados com base no seu consentimento, e informação sobre a possibilidade de não consentir.</li>
+        <li>Informação sobre com quem compartilhamos seus dados.</li>
+        <li>Revogação do consentimento.</li>
+      </ul>
+      <p>Para exercer qualquer um desses direitos, escreva para <a href="mailto:contato@vetra.dev.br">contato@vetra.dev.br</a>. Podemos pedir uma confirmação de identidade para proteger você. Se achar que seus direitos não foram respeitados, você também pode procurar a <a href="https://www.gov.br/anpd" target="_blank" rel="noopener">Autoridade Nacional de Proteção de Dados (ANPD)</a>.</p>
+    </section>
+
+    <section id="seguranca">
+      <h2><span class="n">09</span>Segurança</h2>
+      <p>O site usa conexão criptografada (HTTPS), cabeçalhos de segurança que bloqueiam conteúdo de terceiros não autorizado e hospeda as próprias fontes e bibliotecas, sem depender de serviços externos para carregar a página. Só trabalhamos com fornecedores que adotam boas práticas de segurança. O acesso aos dados de clientes é restrito a quem precisa deles para trabalhar. Nenhum sistema é 100% invulnerável, mas, se acontecer algum incidente relevante, avisaremos os afetados e a ANPD conforme a lei.</p>
+    </section>
+
+    <section id="mudancas">
+      <h2><span class="n">10</span>Mudanças nesta política</h2>
+      <p>Podemos atualizar esta política quando o site ou a lei mudarem. A data no topo da página sempre mostra a versão mais recente.</p>
+    </section>
+
+    <section id="contato">
+      <h2><span class="n">11</span>Contato</h2>
+      <div class="contact">
+        <p><strong>Vetra</strong> · Tecnologia com direção.</p>
+        <p>E-mail: <a href="mailto:contato@vetra.dev.br">contato@vetra.dev.br</a><br>WhatsApp: <a href="https://wa.me/5535997183927" target="_blank" rel="noopener">(35) 99718-3927</a><br>Instagram: <a href="https://instagram.com/vetra.dev" target="_blank" rel="noopener">@vetra.dev</a></p>
+      </div>
+    </section>
+  </article>
+</div>
+
+<footer>
+  <div class="bar"><span>© <span id="ano">2026</span> Vetra. Todos os direitos reservados.</span><span class="mono">Tecnologia com direção.</span></div>
+</footer>
+
+<script src="assets/js/privacidade.js"></script>
+</body>
+</html>

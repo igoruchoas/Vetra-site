@@ -3,38 +3,57 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vetra — Sites, sistemas e dashboards que dão resultado</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<title>Vetra — Tecnologia com direção</title>
 <meta name="description" content="A Vetra constrói sites que trazem clientes, sistemas que organizam o negócio e dashboards que mostram os números. Preço fechado, design aprovado antes do código.">
-<meta name="theme-color" content="#F5F6F8">
+<meta name="theme-color" content="#07090D">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vetra — Sites, sistemas e dashboards que dão resultado">
-<meta property="og:description" content="Tecnologia com direção. Sites, sistemas e dashboards sob medida para pequenas e médias empresas.">
+<meta property="og:title" content="Vetra — Tecnologia com direção">
+<meta property="og:description" content="Sites, sistemas e dashboards sob medida para pequenas e médias empresas.">
 <meta property="og:image" content="assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preload" href="assets/fonts/schibsted-grotesk-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Vetra","alternateName":"vetra.","description":"Sites, sistemas e dashboards que dão resultado.","sameAs":["https://instagram.com/vetra.dev"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Vetra","url":"https://vetra.dev.br","email":"contato@vetra.dev.br","description":"Sites, sistemas e dashboards que dão resultado.","sameAs":["https://instagram.com/vetra.dev"]}</script>
+<script type="importmap">{"imports":{"three":"/assets/vendor/three.module.min.js","three/addons/math/MeshSurfaceSampler.js":"/assets/vendor/MeshSurfaceSampler.js"}}</script>
 </head>
 <body>
-<script>document.documentElement.classList.add('js')</script>
+<script src="assets/js/boot.js"></script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="gPrata" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#D3D8DE"/><stop offset=".7" stop-color="#F1F3F5"/><stop offset="1" stop-color="#9AA3AE"/></linearGradient>
     <linearGradient id="gCeu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BDAFF"/><stop offset=".55" stop-color="#4DB5FF"/><stop offset="1" stop-color="#1F8FE6"/></linearGradient>
     <symbol id="mark" viewBox="0 0 100 100">
-      <path d="M36 20 L6 50 L47 91 L47 75.44 L21.56 50 L43.78 27.78 Z" style="fill: var(--mk-l, #14171C)"/>
-      <path d="M53 9 L94 50 L53 91 Z M64 35.56 L78.44 50 L64 64.44 Z" fill-rule="evenodd" style="fill: var(--mk-r, #4DB5FF)"/>
+      <path d="M36 20 L6 50 L47 91 L47 75.44 L21.56 50 L43.78 27.78 Z" fill="url(#gPrata)"/>
+      <path d="M53 9 L94 50 L53 91 Z M64 35.56 L78.44 50 L64 64.44 Z" fill-rule="evenodd" fill="url(#gCeu)"/>
     </symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 6.8-1.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M4 3l7.5 18 2.4-7.1L21 11.5 4 3z"/></symbol>
   </defs>
 </svg>
+
+<!-- Cena 3D (logo + partículas) -->
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="glow" id="glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Carregamento -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__term">
+    <p><span class="c">$</span> vetra init</p>
+    <p class="dim" id="ldMsg">carregando direção…</p>
+  </div>
+  <div class="loader__num"><span id="ldN">0</span><small>%</small></div>
+  <div class="loader__bar"><i id="ldBar"></i></div>
+</div>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor" aria-hidden="true"><svg class="cursor__tri" viewBox="0 0 24 24"><path d="M6 3.5 L20.5 12 L6 20.5 Z"/></svg><span class="cursor__lbl" id="curLbl"></span></div>
 
 <!-- NAV -->
 <header class="nav" id="nav">
@@ -44,278 +63,358 @@
       <span class="brand__word">vetra<i></i></span>
     </a>
     <nav class="nav__links" aria-label="Principal">
-      <span class="nav__pill" aria-hidden="true"></span>
       <a href="#servicos">Serviços</a>
-      <a href="#processo">Processo</a>
+      <a href="#cases">Na prática</a>
       <a href="#planos">Planos</a>
+      <a href="#orcamento">Orçamento</a>
       <a href="#faq">Dúvidas</a>
     </nav>
     <div class="nav__end">
-      <a class="btn btn--dark btn--sm magnet" href="#contato">Pedir orçamento</a>
+      <a class="btn btn--sky btn--sm magnet" href="#contato">Pedir orçamento</a>
       <button class="nav__toggle" id="navToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navSheet"><span></span><span></span></button>
     </div>
   </div>
+  <span class="nav__progress" aria-hidden="true"><i id="progress"></i></span>
 </header>
 <div class="sheet" id="navSheet">
   <a href="#servicos">Serviços</a>
+  <a href="#cases">Na prática</a>
   <a href="#processo">Processo</a>
   <a href="#planos">Planos</a>
+  <a href="#orcamento">Orçamento</a>
   <a href="#faq">Dúvidas</a>
-  <a class="btn btn--dark" href="#contato">Pedir orçamento <svg><use href="#i-arrow"/></svg></a>
+  <a class="btn btn--sky" href="#contato">Pedir orçamento <svg><use href="#i-arrow"/></svg></a>
 </div>
 
-<main id="topo">
+<!-- HUD de desbloqueio -->
+<div class="hud" id="hud" aria-hidden="true">
+  <svg class="hud__ic"><use href="#i-lock"/></svg>
+  <span class="hud__txt"><b id="hudN">0</b>/<span id="hudT">7</span> desbloqueado</span>
+  <span class="hud__bar"><i id="hudBar"></i></span>
+</div>
+<div class="unlock" id="unlock" role="status" aria-live="polite">
+  <svg class="unlock__ic" aria-hidden="true"><use href="#i-unlock"/></svg>
+  <span class="unlock__t"><small>Desbloqueado</small><b id="unlockName"></b></span>
+</div>
+
+<main>
 
   <!-- HERO -->
-  <section class="hero" aria-labelledby="hero-h">
-    <div class="hero__dots" aria-hidden="true"></div>
-    <div class="hero__dots hero__dots--lit" aria-hidden="true"></div>
-    <div class="wrap hero__grid">
-      <div class="hero__copy">
-        <a class="pill" href="#contato">
-          <span class="pill__dot"></span>
-          <span class="shiny">Agenda aberta para novos projetos</span>
-        </a>
-        <h1 id="hero-h" class="split">Sites, sistemas e dashboards que dão <em>resultado.</em></h1>
-        <p class="lede">A Vetra constrói a tecnologia do seu negócio: páginas que trazem clientes, sistemas que organizam a rotina e painéis que mostram os números. Você aprova o design antes da primeira linha de código.</p>
+  <section class="hero" id="topo">
+    <div class="hero__fallback" aria-hidden="true"><svg><use href="#mark"/></svg></div>
+    <div class="hero__meta wrap">
+      <span>// sites · sistemas · dashboards</span>
+      <span class="hero__live"><i></i>agenda aberta</span>
+    </div>
+    <div class="hero__bottom wrap">
+      <h1 class="hero__title" aria-label="Tecnologia com direção.">
+        <span class="ln"><span>Tecnologia</span></span>
+        <span class="ln"><span>com <em>direção.</em></span></span>
+      </h1>
+      <div class="hero__side">
+        <p>Sites que trazem clientes, sistemas que organizam o negócio e dashboards que mostram os números.</p>
         <div class="hero__cta">
-          <a class="btn btn--dark magnet" href="#contato">Pedir orçamento <svg><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ghost magnet" href="#planos">Ver planos e preços</a>
+          <a class="btn btn--sky magnet" href="#contato">Pedir orçamento <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--line magnet" href="#planos">Ver planos</a>
         </div>
-        <ul class="hero__proof">
-          <li><svg><use href="#i-check"/></svg>Preço fechado</li>
-          <li><svg><use href="#i-check"/></svg>Design aprovado antes do código</li>
-          <li><svg><use href="#i-check"/></svg>Direto com quem desenvolve</li>
-        </ul>
       </div>
+    </div>
+    <div class="cue" aria-hidden="true"><span>role para desbloquear</span><i></i></div>
+  </section>
 
-      <!-- Canvas estilo Figma -->
-      <div class="fig" id="fig" aria-label="Animação: um site sendo desenhado, ajustado e publicado em tempo real" role="img">
-        <div class="fig__bar">
-          <div class="fig__file"><svg class="fig__mk" aria-hidden="true"><use href="#mark"/></svg><span>vetra</span><b>/</b><span class="fig__name">cafe-aurora.fig</span></div>
-          <div class="fig__tools" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
-          <div class="fig__people"><span class="av av--a">C</span><span class="av av--b">V</span><span class="fig__share">Compartilhar</span></div>
+  <!-- MANIFESTO (fixo durante a rolagem) -->
+  <section class="manifesto" id="manifesto" data-hud="A direção">
+    <div class="sticky">
+      <div class="wrap manifesto__in">
+        <div class="manifesto__copy">
+          <span class="eyebrow lk"><span class="dec" data-text="// 01 · o nome">// 01 · o nome</span></span>
+          <p class="words" id="words">Toda empresa tem força. Poucas têm <em>direção.</em> Vetra vem de vetor: uma força que aponta para o lugar <em>certo.</em></p>
         </div>
-        <div class="fig__board" id="board">
-          <span class="fig__frame-label">Desktop — Home</span>
-          <div class="mock s1" id="mock">
-            <div class="m-nav">
-              <span class="m-logo t">Café Aurora</span>
-              <span class="m-links"><i class="t">Cardápio</i><i class="t">Sobre</i><i class="t">Contato</i></span>
-            </div>
-            <div class="m-hero">
-              <div class="m-copy" id="mCopy">
-                <span class="m-tag t">Aberto hoje até 20h</span>
-                <b class="m-h t">O melhor café do bairro, a um clique.</b>
-                <span class="m-p t">Peça pelo WhatsApp e retire sem fila.</span>
-                <span class="m-btn" id="mBtn">Pedir agora</span>
-              </div>
-              <div class="m-img" id="mImg"><span class="m-sun"></span><span class="m-hill"></span><span class="m-hill m-hill--b"></span></div>
-            </div>
-            <div class="m-cards">
-              <div class="m-card"><i class="t">Espresso</i><em class="t">R$ 6</em></div>
-              <div class="m-card"><i class="t">Cappuccino</i><em class="t">R$ 9</em></div>
-              <div class="m-card"><i class="t">Pão de queijo</i><em class="t">R$ 5</em></div>
-            </div>
-            <div class="m-live" id="mLive"><span class="m-live__dot"></span>No ar · cafeaurora.com.br</div>
-            <div class="m-toast" id="mToast"><b>Novo pedido pelo site</b><span>agora mesmo</span></div>
+      </div>
+      <div class="split">
+        <div class="split__card split__card--l" id="splitL">
+          <b>&lt;</b>
+          <span class="k">é o código</span>
+          <p>Cada site, sistema e painel escrito à mão. Nada de template.</p>
+        </div>
+        <div class="split__card split__card--r" id="splitR">
+          <b>▷</b>
+          <span class="k">é a direção</span>
+          <p>Tudo construído para apontar para um resultado: mais clientes.</p>
+        </div>
+        <div class="split__eq" id="splitEq"><span class="mono">=</span> tecnologia com <em>direção.</em></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS (rolagem horizontal) -->
+  <section class="services" id="servicos" data-hud="Serviços">
+    <div class="sticky services__sticky">
+      <div class="services__track" id="track">
+        <div class="panel panel--intro">
+          <span class="eyebrow lk"><span class="dec" data-text="// 02 · o que fazemos">// 02 · o que fazemos</span></span>
+          <h2 class="lk">Três frentes.<br>Um objetivo: <em>resultado.</em></h2>
+          <p class="lk">Continue rolando para ver cada uma em ação.</p>
+          <span class="panel__hint lk" aria-hidden="true">role <svg><use href="#i-arrow"/></svg></span>
+        </div>
+
+        <article class="panel svc">
+          <div class="svc__text">
+            <span class="svc__n">01</span>
+            <span class="kicker">Sites</span>
+            <h3>Que trazem clientes.</h3>
+            <p>Rápidos, lindos no celular e pensados para levar o visitante até o contato: WhatsApp, formulário ou pedido.</p>
+            <ul class="tags"><li>Landing pages</li><li>Institucionais</li><li>SEO</li><li>WhatsApp</li></ul>
           </div>
+          <div class="svc__demo">
+            <div class="browser">
+              <div class="browser__bar"><i></i><i></i><i></i><span>seunegocio.com.br</span></div>
+              <div class="browser__body">
+                <div class="bx bx--nav"><b></b><span></span><span></span><span></span></div>
+                <div class="bx bx--hero"><div><b></b><b class="s"></b><span></span><em>Chamar no WhatsApp</em></div><div class="bx__img"></div></div>
+                <div class="bx bx--cards"><span></span><span></span><span></span></div>
+              </div>
+              <ul class="pings" id="pings" aria-label="Exemplo ilustrativo de contatos chegando"></ul>
+            </div>
+            <span class="demo__note">exemplo ilustrativo</span>
+          </div>
+        </article>
 
-          <div class="sel" id="sel" aria-hidden="true"><span class="sel__tag" id="selTag">Frame</span><span class="sel__size" id="selSize">W 0 · H 0</span><i></i><i></i><i></i><i></i></div>
-          <div class="note" id="note" aria-hidden="true"><span class="av av--b">V</span><p>Dá para deixar o botão mais chamativo?</p></div>
-          <div class="cur cur--a" id="curA" aria-hidden="true"><svg><use href="#i-cursor"/></svg><span>vetra</span></div>
-          <div class="cur cur--b" id="curB" aria-hidden="true"><svg><use href="#i-cursor"/></svg><span>Você</span></div>
-        </div>
-        <div class="fig__term" aria-hidden="true"><span class="fig__prompt">$</span> <span id="term">git init</span><span class="caret"></span></div>
-        <div class="me" id="me" aria-hidden="true"><svg><use href="#i-cursor"/></svg><span>Você</span></div>
+        <article class="panel svc">
+          <div class="svc__text">
+            <span class="svc__n">02</span>
+            <span class="kicker">Sistemas</span>
+            <h3>Que organizam a rotina.</h3>
+            <p>Agendamentos, pedidos, estoque e clientes num lugar só, do jeito que a sua empresa trabalha.</p>
+            <ul class="tags"><li>Agendamentos</li><li>Pedidos</li><li>Estoque</li><li>Clientes</li></ul>
+          </div>
+          <div class="svc__demo">
+            <div class="app">
+              <div class="app__side"><b></b><i class="on"></i><i></i><i></i><i></i></div>
+              <div class="app__main">
+                <div class="app__head"><strong>Agenda de hoje</strong><span class="app__count"><b id="sysN">12</b> atendimentos</span></div>
+                <div class="app__rows" id="rows">
+                  <div class="r"><span class="t">09:00</span><span class="n">Ana · Corte</span><em class="st" data-s="0">Agendado</em></div>
+                  <div class="r"><span class="t">10:30</span><span class="n">Pedido #214</span><em class="st" data-s="1">Confirmado</em></div>
+                  <div class="r"><span class="t">11:15</span><span class="n">Bruno · Consulta</span><em class="st" data-s="2">Concluído</em></div>
+                  <div class="r"><span class="t">14:00</span><span class="n">Carla · Retorno</span><em class="st" data-s="0">Agendado</em></div>
+                </div>
+              </div>
+            </div>
+            <span class="demo__note">exemplo ilustrativo</span>
+          </div>
+        </article>
+
+        <article class="panel svc">
+          <div class="svc__text">
+            <span class="svc__n">03</span>
+            <span class="kicker">Dashboards</span>
+            <h3>Que mostram os números.</h3>
+            <p>Vendas, clientes e resultados num painel claro, atualizado, para decidir com base em dados e não no achismo.</p>
+            <ul class="tags"><li>Vendas</li><li>Metas</li><li>Analytics</li><li>Relatórios</li></ul>
+          </div>
+          <div class="svc__demo">
+            <div class="dash">
+              <div class="dash__kpis">
+                <div class="kpi"><span>Vendas no mês</span><b>R$ <i data-count="48.2" data-dec="1">48,2</i> mil</b><em>▲ 18%</em></div>
+                <div class="kpi"><span>Novos clientes</span><b><i data-count="132">132</i></b><em>▲ 24%</em></div>
+              </div>
+              <svg class="dash__chart" viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true">
+                <defs><linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4DB5FF" stop-opacity=".4"/><stop offset="1" stop-color="#4DB5FF" stop-opacity="0"/></linearGradient></defs>
+                <g class="grid"><line x1="0" y1="30" x2="300" y2="30"/><line x1="0" y1="60" x2="300" y2="60"/><line x1="0" y1="90" x2="300" y2="90"/></g>
+                <path class="area" d="M0 98 C30 92 45 96 70 84 S115 80 140 66 S185 70 210 50 S260 36 300 18 V120 H0 Z" fill="url(#gArea)"/>
+                <path class="line" pathLength="1" d="M0 98 C30 92 45 96 70 84 S115 80 140 66 S185 70 210 50 S260 36 300 18" fill="none" stroke="#4DB5FF" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+              </svg>
+              <div class="dash__bars"><i style="--h:.42"></i><i style="--h:.55"></i><i style="--h:.48"></i><i style="--h:.7"></i><i style="--h:.62"></i><i style="--h:.86"></i><i style="--h:1"></i></div>
+            </div>
+            <span class="demo__note">exemplo ilustrativo</span>
+          </div>
+        </article>
+
+        <article class="panel svc">
+          <div class="svc__text">
+            <span class="svc__n">04</span>
+            <span class="kicker">Design e medição</span>
+            <h3>Você vê antes de existir.</h3>
+            <p>O layout é desenhado no Figma e aprovado com você antes do código. Depois, Analytics e Pixel mostram de onde vêm os clientes.</p>
+            <ul class="tags"><li>Figma</li><li>Google Analytics</li><li>Pixel da Meta</li></ul>
+          </div>
+          <div class="svc__demo">
+            <div class="figma">
+              <div class="figma__layers">
+                <span class="h">Camadas</span>
+                <div class="ly"><i class="f"></i>Home</div>
+                <div class="ly in"><i class="t"></i>Título</div>
+                <div class="ly in sel"><i class="c"></i>Botão · WhatsApp</div>
+                <div class="ly in"><i class="m"></i>Foto do produto</div>
+              </div>
+              <div class="figma__canvas">
+                <div class="fc"><b></b><b class="s"></b><span class="fc__btn">Chamar no WhatsApp</span><span class="fc__sel"><i></i><i></i><i></i><i></i></span></div>
+                <div class="figma__cur"><svg><use href="#i-cursor"/></svg><span>Você</span></div>
+                <span class="stamp"><svg><use href="#i-check"/></svg>Aprovado</span>
+              </div>
+              <div class="figma__log" id="evlog">
+                <div><span>PageView</span><em>/</em></div>
+                <div><span>ViewContent</span><em>/planos</em></div>
+                <div class="hit"><span>Lead</span><em>botão WhatsApp</em></div>
+              </div>
+            </div>
+            <span class="demo__note">exemplo ilustrativo</span>
+          </div>
+        </article>
       </div>
+      <div class="services__progress" aria-hidden="true"><i id="svcBar"></i></div>
     </div>
   </section>
 
   <!-- MARQUEE -->
   <div class="marquee" aria-label="Tecnologias e ferramentas que usamos">
-    <div class="marquee__track" data-speed="38">
-      <div class="marquee__group">
-        <span>HTML</span><i></i><span>CSS</span><i></i><span>JavaScript</span><i></i><span>React</span><i></i><span>Next.js</span><i></i><span>Node.js</span><i></i><span>Figma</span><i></i><span>Vercel</span><i></i><span>Google Analytics</span><i></i><span>Pixel da Meta</span><i></i><span>SEO</span><i></i><span>LGPD</span><i></i>
-      </div>
+    <div class="marquee__track" data-speed="40">
+      <div class="marquee__group"><span>HTML</span><i></i><span>CSS</span><i></i><span>JavaScript</span><i></i><span>React</span><i></i><span>Next.js</span><i></i><span>Node.js</span><i></i><span>WebGL</span><i></i><span>Figma</span><i></i><span>Vercel</span><i></i><span>Analytics</span><i></i><span>Pixel da Meta</span><i></i><span>SEO</span><i></i><span>LGPD</span><i></i></div>
     </div>
   </div>
 
-  <!-- SERVIÇOS -->
-  <section class="section" id="servicos">
-    <div class="wrap">
-      <div class="head reveal">
-        <span class="eyebrow decrypt" data-text="// o que fazemos">// o que fazemos</span>
-        <h2>Tecnologia sob medida para o seu negócio <em>crescer.</em></h2>
-        <p class="head__lede">Três frentes, um objetivo: mais clientes, menos bagunça e decisões com base em números.</p>
+  <!-- RAIO-X / PROVA -->
+  <section class="xray" id="prova" data-hud="Raio-X">
+    <div class="wrap xray__grid">
+      <div class="xray__copy">
+        <span class="eyebrow lk"><span class="dec" data-text="// 03 · este site é a prova">// 03 · este site é a prova</span></span>
+        <h2 class="lk">Feito à mão. Do pixel ao <em>polígono.</em></h2>
+        <p class="lk">A logo que está girando aí do lado é 3D de verdade, renderizada agora, no seu aparelho. Role mais um pouco e veja por baixo do capô.</p>
+        <div class="stats lk" aria-live="polite">
+          <div class="stat"><span class="stat__k">Carregou em</span><span class="stat__v" id="pLoad">—</span></div>
+          <div class="stat"><span class="stat__k">Quadros por segundo</span><span class="stat__v" id="pFps">—</span></div>
+          <div class="stat"><span class="stat__k">Polígonos na logo</span><span class="stat__v" id="pTris">—</span></div>
+          <div class="stat"><span class="stat__k">Templates comprados</span><span class="stat__v">0</span></div>
+        </div>
+        <p class="xray__punch lk">Se dá para fazer isso aqui, imagina o que dá para fazer pelo seu negócio.</p>
       </div>
-
-      <div class="bento">
-        <article class="card card--sites spot reveal">
-          <div class="card__text">
-            <span class="card__kicker">Sites</span>
-            <h3>Que trazem clientes.</h3>
-            <p>Rápidos, bonitos no celular e pensados para levar o visitante até o contato: WhatsApp, formulário ou pedido.</p>
-            <ul class="tags"><li>Landing pages</li><li>Sites institucionais</li><li>SEO</li><li>WhatsApp</li></ul>
-          </div>
-          <div class="feed" aria-label="Exemplo ilustrativo de contatos chegando pelo site">
-            <span class="feed__label">exemplo ilustrativo</span>
-            <ul class="feed__list" id="feed">
-              <li><b>Pedido de orçamento</b><span>via formulário</span><em>agora</em></li>
-              <li><b>Clique no WhatsApp</b><span>página inicial</span><em>3 min</em></li>
-              <li><b>Novo contato</b><span>Google → site</span><em>12 min</em></li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="card card--dash spot reveal">
-          <span class="card__kicker">Dashboards</span>
-          <h3>Que mostram os números.</h3>
-          <div class="kpi"><span class="kpi__label">Vendas no mês</span><span class="kpi__value">R$ <b data-count="48.2" data-dec="1">48,2</b> mil</span><span class="kpi__delta">▲ 18%</span></div>
-          <svg class="chart" viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true">
-            <defs><linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4DB5FF" stop-opacity=".35"/><stop offset="1" stop-color="#4DB5FF" stop-opacity="0"/></linearGradient></defs>
-            <g class="chart__grid"><line x1="0" y1="30" x2="300" y2="30"/><line x1="0" y1="60" x2="300" y2="60"/><line x1="0" y1="90" x2="300" y2="90"/></g>
-            <path class="chart__area" d="M0 98 C30 92 45 96 70 84 S115 80 140 66 S185 70 210 50 S260 36 300 18 V120 H0 Z" fill="url(#gArea)"/>
-            <path class="chart__line" d="M0 98 C30 92 45 96 70 84 S115 80 140 66 S185 70 210 50 S260 36 300 18" fill="none" stroke="#4DB5FF" stroke-width="3" stroke-linecap="round"/>
-            <circle class="chart__dot" cx="300" cy="18" r="5" fill="#4DB5FF"/>
-          </svg>
-          <span class="card__note">exemplo ilustrativo</span>
-        </article>
-
-        <article class="card card--sys spot reveal">
-          <span class="card__kicker">Sistemas</span>
-          <h3>Que organizam a rotina.</h3>
-          <p>Agendamentos, pedidos, estoque e clientes num lugar só, do jeito que a sua empresa trabalha.</p>
-          <div class="table" aria-hidden="true">
-            <div class="row"><span>Ana · Corte</span><em class="st" data-cycle="0">Agendado</em></div>
-            <div class="row"><span>Pedido #214</span><em class="st" data-cycle="1">Confirmado</em></div>
-            <div class="row"><span>Bruno · Consulta</span><em class="st" data-cycle="2">Concluído</em></div>
-          </div>
-        </article>
-
-        <article class="card card--figma spot reveal">
-          <span class="card__kicker">Design no Figma</span>
-          <h3>Você vê antes de existir.</h3>
-          <p>O layout é desenhado e aprovado com você. Só depois vira código.</p>
-          <div class="layers" aria-hidden="true">
-            <div class="layer"><i class="ly ly--frame"></i>Home</div>
-            <div class="layer layer--in"><i class="ly ly--text"></i>Título</div>
-            <div class="layer layer--in layer--sel"><i class="ly ly--comp"></i>Botão · WhatsApp</div>
-            <div class="layer layer--in"><i class="ly ly--img"></i>Foto do produto</div>
-            <span class="stamp"><svg><use href="#i-check"/></svg>Aprovado</span>
-          </div>
-        </article>
-
-        <article class="card card--measure spot reveal">
-          <span class="card__kicker">Medição</span>
-          <h3>Resultado que dá para provar.</h3>
-          <p>Google Analytics e Pixel da Meta configurados para você saber de onde vêm os clientes.</p>
-          <div class="log" id="log" aria-hidden="true">
-            <div><span>PageView</span><em>/</em></div>
-            <div><span>ViewContent</span><em>/planos</em></div>
-            <div class="log__hit"><span>Lead</span><em>botão WhatsApp</em></div>
-          </div>
-        </article>
+      <div class="xray__space" aria-hidden="true">
+        <span class="xray__tag xray__tag--a">mesh · prata metálico</span>
+        <span class="xray__tag xray__tag--b">wireframe · céu</span>
       </div>
     </div>
   </section>
 
-  <!-- PROVA -->
-  <section class="proof">
-    <div class="wrap proof__grid">
-      <div class="proof__copy reveal">
-        <span class="eyebrow decrypt" data-text="// este site é a prova">// este site é a prova</span>
-        <h2>Tudo o que você está vendo aqui, a gente faz pelo seu negócio.</h2>
-        <p>Nada de tema comprado ou construtor pronto. Esta página foi desenhada e programada à mão, do mesmo jeito que fazemos os projetos dos clientes.</p>
+
+  <!-- PORTFÓLIO 3D -->
+  <section class="cases" id="cases" data-hud="Na prática">
+    <div class="sticky cases__sticky">
+      <div class="wrap cases__grid">
+        <div class="cases__copy">
+          <span class="eyebrow lk"><span class="dec" data-text="// 04 · na prática">// 04 · na prática</span></span>
+          <h2 class="lk">Veja como pode ficar o <em>seu.</em></h2>
+          <div class="case lk">
+            <span class="case__k">Demonstração</span>
+            <h3>Café Aurora</h3>
+            <p>Exemplo de site para uma cafeteria: cardápio com preços, avaliações, horário e todos os botões levando ao pedido no WhatsApp.</p>
+            <ul class="tags"><li>Cardápio</li><li>Pedido no WhatsApp</li><li>Celular primeiro</li><li>Google</li></ul>
+          </div>
+          <div class="case__views lk" aria-hidden="true"><span id="cvDesk" class="on">no computador</span><span id="cvMob">no celular</span></div>
+        </div>
+        <div class="stage" id="stage" aria-label="Site de demonstração do Café Aurora mostrado em um notebook e em um celular" role="img">
+          <div class="device" id="device">
+            <div class="laptop" id="laptop">
+              <div class="laptop__lid" id="lid">
+                <div class="lid__front"><span class="lid__cam"></span><div class="laptop__screen"><img id="lapImg" src="assets/cases/demo-desktop.jpg" alt="" loading="lazy" decoding="async"></div></div>
+                <div class="lid__back"><svg><use href="#mark"/></svg></div>
+              </div>
+              <div class="laptop__base"><i></i><b></b></div>
+            </div>
+            <div class="phone" id="phone">
+              <div class="phone__screen"><img id="phImg" src="assets/cases/demo-mobile.jpg" alt="" loading="lazy" decoding="async"></div>
+              <span class="phone__notch"></span>
+            </div>
+          </div>
+          <div class="stage__floor" aria-hidden="true"></div>
+        </div>
       </div>
-      <div class="proof__stats reveal" aria-live="polite">
-        <div class="stat"><span class="stat__k">Carregou no seu aparelho em</span><span class="stat__v" id="pLoad">—</span></div>
-        <div class="stat"><span class="stat__k">Você está vendo numa tela de</span><span class="stat__v" id="pView">—</span></div>
-        <div class="stat"><span class="stat__k">Temas ou templates comprados</span><span class="stat__v">0</span></div>
-        <div class="stat"><span class="stat__k">Bibliotecas de animação usadas</span><span class="stat__v">0</span></div>
+      <div class="cases__next" id="casesNext">
+        <span class="mono">próximo site</span>
+        <b>O seu negócio.</b>
+        <a class="btn btn--sky magnet" href="#orcamento">Quero o meu <svg><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </section>
 
   <!-- PROCESSO -->
-  <section class="section process" id="processo">
+  <section class="process" id="processo" data-hud="Processo">
     <div class="wrap process__grid">
       <div class="process__head">
-        <span class="eyebrow eyebrow--dark decrypt" data-text="// processo">// processo</span>
-        <h2>Do primeiro papo ao site no ar, em quatro <em>commits.</em></h2>
-        <p>Você sabe o que está acontecendo em cada etapa e aprova antes de seguir para a próxima.</p>
-        <a class="btn btn--sky magnet" href="#contato">Começar meu projeto <svg><use href="#i-arrow"/></svg></a>
+        <span class="eyebrow lk"><span class="dec" data-text="// 05 · processo">// 05 · processo</span></span>
+        <h2 class="lk">Do primeiro papo ao site no ar, em quatro <em>commits.</em></h2>
+        <p class="lk">Você sabe o que está acontecendo em cada etapa e aprova antes de seguir para a próxima.</p>
+        <a class="btn btn--sky magnet lk" href="#contato">Começar meu projeto <svg><use href="#i-arrow"/></svg></a>
       </div>
-      <div class="steps" id="steps">
-        <span class="steps__line" aria-hidden="true"><i></i></span>
-        <ol>
-          <li class="step">
-            <code>git init</code>
-            <h3>Diagnóstico</h3>
-            <p>Uma conversa para entender o seu negócio, o seu público e o que precisa acontecer para o projeto dar resultado.</p>
-            <span class="step__out">Entrega: escopo, prazo e preço fechados</span>
-          </li>
-          <li class="step">
-            <code>git checkout -b design</code>
-            <h3>Design no Figma</h3>
-            <p>Desenhamos o layout e você acompanha, comenta e aprova. Nenhuma linha de código antes do seu "pode seguir".</p>
-            <span class="step__out">Entrega: layout aprovado</span>
-          </li>
-          <li class="step">
-            <code>git commit</code>
-            <h3>Desenvolvimento</h3>
-            <p>Código feito à mão: rápido, funcionando em qualquer celular e preparado para aparecer no Google.</p>
-            <span class="step__out">Entrega: versão de teste para revisar</span>
-          </li>
-          <li class="step">
-            <code>git push</code>
-            <h3>No ar e medindo</h3>
-            <p>Publicamos no seu domínio, configuramos Analytics e Pixel e acompanhamos os primeiros resultados.</p>
-            <span class="step__out">Entrega: site no ar e medindo</span>
-          </li>
-        </ol>
-      </div>
+      <ol class="commits" id="commits">
+        <span class="commits__line" aria-hidden="true"><i id="commitFill"></i></span>
+        <li class="commit">
+          <span class="commit__dot" aria-hidden="true"></span>
+          <code><b>a1f3c9e</b> git init</code>
+          <h3>Diagnóstico</h3>
+          <p>Uma conversa para entender o seu negócio, o seu público e o que precisa acontecer para o projeto dar resultado.</p>
+          <span class="commit__out">Entrega: escopo, prazo e preço fechados</span>
+        </li>
+        <li class="commit">
+          <span class="commit__dot" aria-hidden="true"></span>
+          <code><b>7c2e81b</b> git checkout -b design</code>
+          <h3>Design no Figma</h3>
+          <p>Desenhamos o layout e você acompanha, comenta e aprova. Nenhuma linha de código antes do seu "pode seguir".</p>
+          <span class="commit__out">Entrega: layout aprovado</span>
+        </li>
+        <li class="commit">
+          <span class="commit__dot" aria-hidden="true"></span>
+          <code><b>e94d0a3</b> git commit</code>
+          <h3>Desenvolvimento</h3>
+          <p>Código feito à mão: rápido, funcionando em qualquer celular e preparado para aparecer no Google.</p>
+          <span class="commit__out">Entrega: versão de teste para revisar</span>
+        </li>
+        <li class="commit">
+          <span class="commit__dot" aria-hidden="true"></span>
+          <code><b>f05b6d2</b> git push</code>
+          <h3>No ar e medindo</h3>
+          <p>Publicamos no seu domínio, configuramos Analytics e Pixel e acompanhamos os primeiros resultados.</p>
+          <span class="commit__out">Entrega: site no ar e medindo</span>
+        </li>
+      </ol>
     </div>
   </section>
 
   <!-- PLANOS -->
-  <section class="section plans" id="planos">
+  <section class="plans" id="planos" data-hud="Planos">
     <div class="wrap">
-      <div class="head reveal">
-        <span class="eyebrow decrypt" data-text="// planos para sites">// planos para sites</span>
-        <h2>Preço fechado, sem <em>surpresa.</em></h2>
-        <p class="head__lede">Cada plano inclui tudo do anterior. Sistemas e dashboards são orçados sob medida, depois do diagnóstico.</p>
+      <div class="head">
+        <span class="eyebrow lk"><span class="dec" data-text="// 06 · planos para sites">// 06 · planos para sites</span></span>
+        <h2 class="lk">Preço fechado, sem <em>surpresa.</em></h2>
+        <p class="lk">Cada plano inclui tudo do anterior. Sistemas e dashboards são orçados sob medida, depois do diagnóstico.</p>
       </div>
-
       <div class="plans__grid">
-        <article class="plan tilt reveal">
-          <div class="plan__top"><h3>Básico</h3><span class="plan__for">Para estar na internet rápido</span></div>
+        <article class="plan deal tilt">
+          <div class="plan__top"><h3>Básico</h3><span>Para estar na internet rápido</span></div>
           <div class="plan__price"><span>R$</span><b>299</b></div>
           <ul class="plan__list">
             <li><svg><use href="#i-check"/></svg>Página simples e bonita</li>
             <li><svg><use href="#i-check"/></svg>Adaptada para celular</li>
             <li><svg><use href="#i-check"/></svg>15 dias de correção técnica após a entrega</li>
           </ul>
-          <a class="btn btn--ghost plan__cta" href="#contato" data-plan="Básico">Quero o Básico</a>
+          <a class="btn btn--line plan__cta" href="#contato" data-plan="Básico">Quero o Básico</a>
         </article>
-
-        <article class="plan tilt reveal">
-          <div class="plan__top"><h3>Profissional</h3><span class="plan__for">Para receber contatos e medir</span></div>
+        <article class="plan deal tilt">
+          <div class="plan__top"><h3>Profissional</h3><span>Para receber contatos e medir</span></div>
           <div class="plan__price"><span>R$</span><b>499</b></div>
           <span class="plan__inherit">Tudo do Básico, mais:</span>
           <ul class="plan__list">
             <li><svg><use href="#i-check"/></svg>Formulário de contato</li>
-            <li><svg><use href="#i-check"/></svg>Google Analytics ou Pixel do Meta</li>
+            <li><svg><use href="#i-check"/></svg>Google Analytics ou Pixel da Meta</li>
             <li><svg><use href="#i-check"/></svg>Revisão dos textos</li>
             <li><svg><use href="#i-check"/></svg>1 mês de manutenção</li>
             <li><svg><use href="#i-check"/></svg>2 alterações no primeiro mês</li>
           </ul>
-          <a class="btn btn--ghost plan__cta" href="#contato" data-plan="Profissional">Quero o Profissional</a>
+          <a class="btn btn--line plan__cta" href="#contato" data-plan="Profissional">Quero o Profissional</a>
         </article>
-
-        <article class="plan plan--top tilt reveal">
+        <article class="plan plan--top deal tilt">
           <span class="plan__badge">Mais completo</span>
-          <div class="plan__top"><h3>Completo</h3><span class="plan__for">Para ter a melhor página e não se preocupar</span></div>
+          <div class="plan__top"><h3>Completo</h3><span>Para ter a melhor página e não se preocupar</span></div>
           <div class="plan__price"><span>R$</span><b>799</b></div>
           <span class="plan__inherit">Tudo do Profissional, mais:</span>
           <ul class="plan__list">
@@ -328,10 +427,9 @@
           <span class="plan__save">Só a manutenção incluída valeria R$ 291.</span>
         </article>
       </div>
-
-      <div class="care reveal">
+      <div class="care deal">
         <div class="care__main">
-          <span class="card__kicker">Manutenção mensal</span>
+          <span class="kicker">Manutenção mensal</span>
           <div class="care__price"><b>R$ 97</b><span>/mês</span></div>
           <p>Mantém a página funcionando e o conteúdo atualizado. Opcional depois do período incluído no plano.</p>
         </div>
@@ -345,15 +443,70 @@
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section" id="faq">
-    <div class="wrap faq">
-      <div class="faq__head reveal">
-        <span class="eyebrow decrypt" data-text="// dúvidas">// dúvidas</span>
-        <h2>Perguntas <em>frequentes.</em></h2>
-        <p>Não encontrou a sua? Mande uma mensagem e a gente responde.</p>
+
+  <!-- SIMULADOR DE ORÇAMENTO -->
+  <section class="sim" id="orcamento" data-hud="Orçamento">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow lk"><span class="dec" data-text="// 07 · monte seu projeto">// 07 · monte seu projeto</span></span>
+        <h2 class="lk">Monte o seu projeto e veja o preço <em>na hora.</em></h2>
+        <p class="lk">Marque o que você precisa. O plano certo se monta sozinho, e você manda tudo pronto no nosso WhatsApp.</p>
       </div>
-      <div class="faq__list reveal">
+      <div class="sim__grid">
+        <div class="sim__steps">
+          <div class="sim__step lk">
+            <div class="sim__h"><span class="sim__n">1</span><h3>O que você precisa?</h3></div>
+            <div class="kinds">
+              <label class="kind"><input type="checkbox" name="kind" value="Site" checked><span class="kind__box"><i class="kind__ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9h18" stroke="currentColor" stroke-width="2"/><circle cx="6.5" cy="6.5" r=".9" fill="currentColor"/></svg></i><b>Site</b><small>Para trazer clientes</small></span></label>
+              <label class="kind"><input type="checkbox" name="kind" value="Sistema"><span class="kind__box"><i class="kind__ic"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4" cy="6" r="1.4" fill="currentColor"/><circle cx="4" cy="12" r="1.4" fill="currentColor"/><circle cx="4" cy="18" r="1.4" fill="currentColor"/></svg></i><b>Sistema</b><small>Para organizar a rotina</small></span></label>
+              <label class="kind"><input type="checkbox" name="kind" value="Dashboard"><span class="kind__box"><i class="kind__ic"><svg viewBox="0 0 24 24"><path d="M5 20V13M10 20V8M15 20v-5M20 20V4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></i><b>Dashboard</b><small>Para ver os números</small></span></label>
+            </div>
+          </div>
+          <div class="sim__step lk" id="simSite">
+            <div class="sim__h"><span class="sim__n">2</span><h3>Do que o seu site precisa?</h3></div>
+            <div class="opts">
+              <label class="opt is-fixed"><input type="checkbox" checked disabled><span class="sw"></span><span class="opt__t">Página bonita e adaptada para celular</span><em>sempre incluso</em></label>
+              <label class="opt"><input type="checkbox" name="feat" value="Formulário de contato" data-lv="1"><span class="sw"></span><span class="opt__t">Formulário de contato</span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="Google Analytics ou Pixel da Meta" data-lv="1"><span class="sw"></span><span class="opt__t">Saber de onde vêm os clientes <small>Analytics ou Pixel</small></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="Revisão dos textos" data-lv="1"><span class="sw"></span><span class="opt__t">Revisão dos meus textos</span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="Textos escritos para o meu negócio" data-lv="2"><span class="sw"></span><span class="opt__t">Textos escritos por vocês</span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="Layout exclusivo" data-lv="2"><span class="sw"></span><span class="opt__t">Layout exclusivo, feito do zero</span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="Alterações nos primeiros meses" data-lv="2"><span class="sw"></span><span class="opt__t">Manutenção e alterações nos primeiros meses</span></label>
+            </div>
+          </div>
+          <div class="sim__step lk">
+            <div class="sim__h"><span class="sim__n">3</span><h3>Depois da entrega</h3></div>
+            <label class="opt"><input type="checkbox" id="simCare"><span class="sw"></span><span class="opt__t">Quero manutenção mensal contínua <small>+ R$ 97/mês, opcional</small></span></label>
+          </div>
+        </div>
+        <aside class="receipt lk" id="receipt" aria-live="polite">
+          <div class="receipt__top"><span class="mono">$ vetra orcamento</span><span class="receipt__dot"></span></div>
+          <span class="receipt__k">Plano indicado</span>
+          <b class="receipt__plan" id="rPlan">Básico</b>
+          <div class="meter" aria-hidden="true">
+            <div class="meter__track"><i id="rMeter"></i><span class="meter__mk" id="rMk"></span></div>
+            <div class="meter__lbl"><span>Básico</span><span>Profissional</span><span>Completo</span></div>
+          </div>
+          <div class="receipt__price"><small id="rCur">R$</small><b id="rPrice">299</b></div>
+          <span class="receipt__sub" id="rSub">preço fechado do site</span>
+          <ul class="receipt__list" id="rList"></ul>
+          <div class="receipt__extra" id="rExtra"></div>
+          <button class="btn btn--sky receipt__cta magnet" type="button" id="rSend">Enviar no WhatsApp <svg><use href="#i-arrow"/></svg></button>
+          <span class="receipt__note">Valores dos planos de site. Sistemas e dashboards são orçados depois de uma conversa de diagnóstico.</span>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq" data-hud="Dúvidas">
+    <div class="wrap faq__grid">
+      <div class="faq__head">
+        <span class="eyebrow lk"><span class="dec" data-text="// 08 · dúvidas">// 08 · dúvidas</span></span>
+        <h2 class="lk">Perguntas <em>frequentes.</em></h2>
+        <p class="lk">Não encontrou a sua? Mande uma mensagem e a gente responde.</p>
+      </div>
+      <div class="faq__list lk">
         <div class="qa is-open"><button type="button" aria-expanded="true">Quanto tempo leva para o site ficar pronto?<span class="qa__ic" aria-hidden="true"></span></button>
           <div class="qa__a"><div><p>Depende do plano e de quanto conteúdo você já tem (textos, fotos, logo). O prazo é combinado e fechado no diagnóstico, antes de começar, e vai escrito na proposta.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">Vou ver o site antes de ficar pronto?<span class="qa__ic" aria-hidden="true"></span></button>
@@ -364,6 +517,8 @@
           <div class="qa__a"><div><p>Os planos Profissional e Completo já incluem alterações. Depois do período incluído, a manutenção mensal cobre 2 alterações por mês. Novas seções ou páginas são orçadas à parte.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">Vocês fazem sistemas e dashboards?<span class="qa__ic" aria-hidden="true"></span></button>
           <div class="qa__a"><div><p>Sim. Agendamentos, pedidos, controle de estoque, cadastro de clientes e painéis de vendas. Como cada empresa funciona de um jeito, esses projetos são orçados depois de uma conversa de diagnóstico.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Um site 3D assim fica pesado?<span class="qa__ic" aria-hidden="true"></span></button>
+          <div class="qa__a"><div><p>Não precisa ficar. Efeitos como este são usados só onde fazem sentido e o site continua rápido no celular. Cada projeto é pensado para o que traz resultado para o seu negócio, não para enfeitar.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">Como funciona o pagamento?<span class="qa__ic" aria-hidden="true"></span></button>
           <div class="qa__a"><div><p>As condições ficam descritas na proposta, junto com o escopo e o prazo, para você saber exatamente o que está contratando antes de começar.</p></div></div></div>
       </div>
@@ -371,33 +526,35 @@
   </section>
 
   <!-- CONTATO -->
-  <section class="section contact" id="contato">
+  <section class="contact" id="contato" data-hud="Contato">
+    <div class="contact__hero wrap">
+      <span class="eyebrow lk"><span class="dec" data-text="// 09 · 100% desbloqueado">// 09 · 100% desbloqueado</span></span>
+      <h2 class="lk">Você desbloqueou tudo. Agora é a vez do seu <em>negócio.</em></h2>
+    </div>
     <div class="wrap">
-      <div class="contact__box reveal">
+      <div class="contact__box">
         <div class="contact__side">
-          <canvas id="grid" aria-hidden="true"></canvas>
-          <div class="contact__copy">
-            <span class="eyebrow eyebrow--dark">$ git commit -m "meu projeto"</span>
-            <h2>Vamos colocar o seu negócio na <em>direção certa?</em></h2>
-            <p>Conte rapidinho o que você precisa. A gente responde com os próximos passos e, se fizer sentido, uma proposta com preço fechado.</p>
-          </div>
-          <div class="contact__ways" id="ways">
-            <a class="way" id="wayIg" href="https://instagram.com/vetra.dev" target="_blank" rel="noopener"><span class="way__k">Instagram</span><b>@vetra.dev</b></a>
+          <span class="eyebrow">$ git commit -m "meu projeto"</span>
+          <h3>Vamos colocar o seu negócio na <em>direção certa?</em></h3>
+          <p>Conte rapidinho o que você precisa. A gente responde com os próximos passos e, se fizer sentido, uma proposta com preço fechado.</p>
+          <div class="ways" id="ways">
+            <a class="way" href="https://wa.me/5535997183927" target="_blank" rel="noopener"><span>WhatsApp</span><b>(35) 99718-3927</b></a>
+            <a class="way" href="mailto:contato@vetra.dev.br"><span>E-mail</span><b>contato@vetra.dev.br</b></a>
+            <a class="way" href="https://instagram.com/vetra.dev" target="_blank" rel="noopener"><span>Instagram</span><b>@vetra.dev</b></a>
           </div>
         </div>
-
         <form class="form" id="form" novalidate>
           <div class="form__row">
-            <div class="field" id="f-nome"><label for="nome">Seu nome</label><input id="nome" name="nome" autocomplete="name" placeholder="Como podemos te chamar?"><span class="field__err"></span></div>
-            <div class="field"><label for="negocio">Seu negócio</label><input id="negocio" name="negocio" autocomplete="organization" placeholder="Ex.: Café Aurora"></div>
+            <div class="field" id="f-nome"><label for="nome">Seu nome</label><input id="nome" name="nome" maxlength="80" autocomplete="name" placeholder="Como podemos te chamar?"><span class="field__err"></span></div>
+            <div class="field"><label for="negocio">Seu negócio</label><input id="negocio" name="negocio" maxlength="80" autocomplete="organization" placeholder="Ex.: Café Aurora"></div>
           </div>
           <fieldset class="field" id="f-tipo">
             <legend>O que você precisa?</legend>
             <div class="chips">
               <label class="chip"><input type="checkbox" id="t-site" name="tipo" value="Site"><span>Site</span></label>
-              <label class="chip"><input type="checkbox" id="t-sistema" name="tipo" value="Sistema"><span>Sistema</span></label>
-              <label class="chip"><input type="checkbox" id="t-dash" name="tipo" value="Dashboard"><span>Dashboard</span></label>
-              <label class="chip"><input type="checkbox" id="t-naosei" name="tipo" value="Ainda não sei"><span>Ainda não sei</span></label>
+              <label class="chip"><input type="checkbox" name="tipo" value="Sistema"><span>Sistema</span></label>
+              <label class="chip"><input type="checkbox" name="tipo" value="Dashboard"><span>Dashboard</span></label>
+              <label class="chip"><input type="checkbox" name="tipo" value="Ainda não sei"><span>Ainda não sei</span></label>
             </div>
             <span class="field__err"></span>
           </fieldset>
@@ -410,10 +567,10 @@
               <option>Completo</option>
             </select>
           </div>
-          <div class="field"><label for="msg">Mensagem</label><textarea id="msg" name="msg" rows="4" placeholder="Conte sobre o seu negócio e o que você quer alcançar."></textarea></div>
+          <div class="field"><label for="msg">Mensagem</label><textarea id="msg" name="msg" rows="4" maxlength="1000" placeholder="Conte sobre o seu negócio e o que você quer alcançar."></textarea></div>
           <div class="form__foot">
-            <p id="formHint">Sua mensagem fica pronta para enviar no nosso direct.</p>
-            <button class="btn btn--dark magnet" type="submit">Enviar mensagem <svg><use href="#i-arrow"/></svg></button>
+            <p>Sua mensagem abre pronta no nosso WhatsApp. Veja a nossa <a class="lnk" href="privacidade.html">política de privacidade</a>.</p>
+            <button class="btn btn--sky magnet" type="submit">Enviar mensagem <svg><use href="#i-arrow"/></svg></button>
           </div>
         </form>
       </div>
@@ -429,18 +586,36 @@
         <p>Sites, sistemas e dashboards que dão resultado.</p>
       </div>
       <nav class="footer__nav" aria-label="Rodapé">
-        <a href="#servicos">Serviços</a><a href="#processo">Processo</a><a href="#planos">Planos</a><a href="#faq">Dúvidas</a><a href="#contato">Contato</a><a href="https://instagram.com/vetra.dev" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="#servicos">Serviços</a><a href="#cases">Na prática</a><a href="#processo">Processo</a><a href="#planos">Planos</a><a href="#orcamento">Orçamento</a><a href="#faq">Dúvidas</a><a href="#contato">Contato</a><a href="https://instagram.com/vetra.dev" target="_blank" rel="noopener">Instagram ↗</a>
       </nav>
     </div>
     <div class="footer__word" id="fword" aria-hidden="true">vetra.</div>
     <div class="footer__legal">
       <span>© <span id="ano">2026</span> Vetra. Todos os direitos reservados.</span>
+      <button class="term-hint" type="button" id="termHint"><span class="mono">&gt;_</span> Dev? aperte <kbd>/</kbd> ou toque aqui</button>
+      <a class="footer__priv" href="privacidade.html">Política de privacidade</a>
       <span class="mono">Tecnologia com direção.</span>
     </div>
   </div>
 </footer>
 
+<a class="wa-fab" id="waFab" href="https://wa.me/5535997183927?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Vetra%20e%20quero%20saber%20mais." target="_blank" rel="noopener" aria-label="Conversar no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.9 2.3 1 2.5c.1.2 1.7 2.6 4.1 3.6 1.5.7 2.1.7 2.9.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></a>
+
+<!-- Transição ▷ -->
+<div class="wipe" id="wipe" aria-hidden="true"><div class="wipe__a"></div><div class="wipe__b"></div><span class="wipe__lbl" id="wipeLbl"></span></div>
+
+<!-- Terminal secreto -->
+<div class="term" id="term" role="dialog" aria-modal="true" aria-label="Terminal da Vetra" hidden>
+  <div class="term__win">
+    <div class="term__bar"><span class="term__dots"><i></i><i></i><i></i></span><span class="term__title">visitante@vetra: ~</span><button class="term__x" type="button" id="termX" aria-label="Fechar terminal">esc</button></div>
+    <div class="term__out" id="termOut"></div>
+    <form class="term__in" id="termForm" autocomplete="off"><label for="termInput" class="term__ps">visitante@vetra <b>~</b> $</label><input id="termInput" maxlength="60" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Digite um comando"></form>
+  </div>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/vendor/lenis.min.js"></script>
 <script src="script.js"></script>
+<script type="module" src="gl.js"></script>
 </body>
 </html>
