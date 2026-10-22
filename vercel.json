@@ -36,6 +36,10 @@
         {
           "key": "X-DNS-Prefetch-Control",
           "value": "off"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     },
