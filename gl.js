@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
 
 (function init() {
-  const V3 = window.V3 || (window.V3 = { t: { x: 0, y: .2, s: 1, rx: 0, ry: 0, split: 0, wire: 0, op: 1 }, mx: 0, my: 0, vel: 0, start: true });
+  const V3 = window.V3 || (window.V3 = { t: { x: 0, y: .2, s: 1, rx: 0, ry: 0, split: 0, wire: 0, op: 1, dust: 0 }, mx: 0, my: 0, vel: 0, start: true });
   const canvas = document.getElementById('gl');
   const mobile = Math.min(innerWidth, innerHeight) < 700;
 
@@ -70,8 +70,8 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
 
   const silver = new THREE.MeshPhysicalMaterial({ color: 0xeef1f5, metalness: 1, roughness: .16, clearcoat: .6, clearcoatRoughness: .12, envMapIntensity: 1.35 });
   const sky = new THREE.MeshPhysicalMaterial({ color: 0x4db5ff, metalness: .35, roughness: .2, clearcoat: 1, clearcoatRoughness: .05, emissive: 0x1f8fe6, emissiveIntensity: .35, envMapIntensity: 1.1 });
-  const wireMat = new THREE.MeshBasicMaterial({ color: 0x4db5ff, wireframe: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0x9bdaff, transparent: true, opacity: 0, depthWrite: false });
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0x1f8fe6, wireframe: true, transparent: true, opacity: 0, depthWrite: false });
+  const edgeMat = new THREE.LineBasicMaterial({ color: 0x1f8fe6, transparent: true, opacity: 0, depthWrite: false });
 
   const logo = new THREE.Group(); scene.add(logo);
   const mkPiece = ({ g, c }, mat) => {
@@ -88,7 +88,7 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
   const NB = mobile ? 900 : 1800;
   const bHome = new Float32Array(NB * 6), bVel = new Float32Array(NB * 6), bPos = new Float32Array(NB * 6), bCol = new Float32Array(NB * 6);
   {
-    const tmp = new THREE.Vector3(), cS = new THREE.Color(0xe9edf2), cB = new THREE.Color(0x4db5ff), cB2 = new THREE.Color(0x9bdaff);
+    const tmp = new THREE.Vector3(), cS = new THREE.Color(0x9aa3ae), cB = new THREE.Color(0x1f8fe6), cB2 = new THREE.Color(0x4db5ff);
     [[pL, cS, cS], [pR, cB, cB2]].forEach(([piece, c1, c2], pi) => {
       const sampler = new MeshSurfaceSampler(piece.children[0]).build();
       for (let i = 0; i < NB; i++) {
@@ -99,13 +99,21 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
       }
     });
   }
+  /* nuvem de partículas que se junta para formar a logo (estilo Igloo) */
+  const bScat = new Float32Array(NB * 6), bDel = new Float32Array(NB * 2);
+  for (let i = 0; i < NB * 2; i++) {
+    const j = i * 3, u = Math.random() * 2 - 1, th = Math.random() * Math.PI * 2, r = 2.2 + Math.pow(Math.random(), .8) * 3.2, q = Math.sqrt(1 - u * u);
+    bScat[j] = q * Math.cos(th) * r * 1.5; bScat[j + 1] = u * r * .8; bScat[j + 2] = q * Math.sin(th) * r * .7;
+    bDel[i] = Math.random();
+  }
+  let dustNow = 0;
   const bg = new THREE.BufferGeometry();
   bg.setAttribute('position', new THREE.BufferAttribute(bPos, 3)); bg.setAttribute('color', new THREE.BufferAttribute(bCol, 3));
-  const burstMat = new THREE.PointsMaterial({ size: .05, vertexColors: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true });
+  const burstMat = new THREE.PointsMaterial({ size: .05, vertexColors: true, transparent: true, opacity: 0, depthWrite: false, sizeAttenuation: true });
   const burst = new THREE.Points(bg, burstMat); burst.visible = false; burst.frustumCulled = false; logo.add(burst);
   let burstT = -1;
   const explode = () => {
-    if (burstT >= 0 || !logo.visible) return;
+    if (burstT >= 0 || !logo.visible || dustNow > 0) return;
     burstT = 0;
     for (let i = 0; i < NB * 2; i++) {
       const j = i * 3, x = bHome[j], y = bHome[j + 1], z = bHome[j + 2];
@@ -157,7 +165,7 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
     gr.addColorStop(0, 'rgba(77,181,255,.5)'); gr.addColorStop(.25, 'rgba(77,181,255,.22)'); gr.addColorStop(.55, 'rgba(77,181,255,.06)'); gr.addColorStop(1, 'rgba(77,181,255,0)');
     x.fillStyle = gr; x.fillRect(0, 0, 256, 256); return new THREE.CanvasTexture(c);
   })();
-  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: .5, toneMapped: false }));
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, depthWrite: false, opacity: .5, toneMapped: false }));
   glow.renderOrder = -1; glow.scale.set(5.5, 5.5, 1); glow.position.z = -1.2; logo.add(glow);
 
   /* ---------- Partículas (campo de vetores) ---------- */
@@ -166,13 +174,14 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
   for (let i = 0; i < N; i++) {
     pos[i * 3] = (Math.random() - .5) * 26; pos[i * 3 + 1] = (Math.random() - .5) * 16; pos[i * 3 + 2] = -14 + Math.random() * 15; seed[i] = Math.random();
   }
+  const base = pos.slice(), offX = new Float32Array(N), offY = new Float32Array(N);
   const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   const dotTex = (() => {
     const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
     const gr = x.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.4, 'rgba(155,218,255,.6)'); gr.addColorStop(1, 'rgba(155,218,255,0)');
     x.fillStyle = gr; x.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c);
   })();
-  const pts = new THREE.Points(pg, new THREE.PointsMaterial({ size: .07, map: dotTex, transparent: true, opacity: .7, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xbfe6ff, sizeAttenuation: true }));
+  const pts = new THREE.Points(pg, new THREE.PointsMaterial({ size: .07, map: dotTex, transparent: true, opacity: .5, depthWrite: false, color: 0x1f8fe6, sizeAttenuation: true }));
   scene.add(pts);
 
   /* ---------- Tamanho ---------- */
@@ -202,7 +211,7 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
 
     const T = V3.t;
     for (const k in T) C[k] = damp(C[k], T[k], 5.5, dt);
-    if (V3.start && intro < 1) { if (!introT0) introT0 = now; intro = Math.min(1, (now - introT0) / 1900); }
+    if (V3.start && intro < 1) { if (!introT0) introT0 = now; intro = Math.min(1, (now - introT0) / 2600); }
     const ie = 1 - Math.pow(1 - intro, 4);
     mx = damp(mx, V3.mx || 0, 3, dt); my = damp(my, V3.my || 0, 3, dt);
     scrollSpin = damp(scrollSpin, (V3.vel || 0) * .004, 4, dt);
@@ -224,8 +233,11 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
     pL.rotation.set(0, -sp * .18 + Math.sin(time * 1.3) * .05 * C.split, sp * .12);
     pR.rotation.set(0, sp * .18 - Math.sin(time * 1.3) * .05 * C.split, -sp * .12);
 
-    // opacidade e raio-x
-    const op = C.op * ie, w = C.wire;
+    // opacidade, nuvem de partículas e raio-x
+    const w = C.wire;
+    const dust = burstT >= 0 ? 0 : Math.max(C.dust || 0, V3.start ? 1 - intro : 1);
+    dustNow = dust;
+    const op = C.op * (V3.start ? 1 : 0);
     let meshK = 1;
     if (burstT >= 0) {
       burstT += dt; const t = burstT;
@@ -240,25 +252,45 @@ import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
       meshK = t < .1 ? 1 - t / .1 : t > 1.6 ? Math.min(1, (t - 1.6) / .3) : 0;
       burst.visible = true; burstMat.opacity = (1 - meshK) * op;
       if (t > 1.95) { burstT = -1; burst.visible = false; meshK = 1; }
-    }
+    } else if (dust > .001) {
+      for (let i = 0; i < NB * 2; i++) {
+        const j = i * 3;
+        let d = (dust - .45 * bDel[i]) / .55; d = d < 0 ? 0 : d > 1 ? 1 : d; d = d * d * (3 - 2 * d);
+        const hx = bHome[j], hy = bHome[j + 1], hz = bHome[j + 2];
+        const x = hx + (bScat[j] - hx) * d, y = hy + (bScat[j + 1] - hy) * d + Math.sin(time * 1.4 + bDel[i] * 9) * .12 * d, z = hz + (bScat[j + 2] - hz) * d;
+        const ang = d * 2.4 + time * .25 * d, cs = Math.cos(ang), sn = Math.sin(ang);
+        bPos[j] = x * cs - z * sn; bPos[j + 1] = y; bPos[j + 2] = x * sn + z * cs;
+      }
+      bg.attributes.position.needsUpdate = true;
+      meshK = Math.max(0, Math.min(1, (.14 - dust) / .14));
+      burst.visible = true; burstMat.opacity = op * (1 - meshK * meshK) * .95; burstMat.size = .05 + dust * .03;
+    } else { burst.visible = false; burstMat.size = .05; }
     silver.opacity = sky.opacity = op * (1 - .93 * w) * meshK;
     const solid = silver.opacity > .985;
     if (silver.transparent === solid) { silver.transparent = sky.transparent = !solid; silver.depthWrite = sky.depthWrite = solid; silver.needsUpdate = sky.needsUpdate = true; }
     wireMat.opacity = op * w * .22; edgeMat.opacity = op * w;
-    glow.material.opacity = op * .45 * (1 - .5 * w) * (burstT >= 0 ? 1.5 : 1);
+    glow.material.opacity = op * .28 * (1 - .5 * w) * (burstT >= 0 ? 1.5 : 1) * meshK;
     logo.visible = op > .005;
 
-    // partículas: deriva lenta + "warp" com a velocidade da rolagem
-    const a = pg.attributes.position.array, v = (V3.vel || 0) * .02;
+    // partículas: deriva lenta + "warp" com a rolagem + se afastam do mouse
+    const a = pg.attributes.position.array, v = (V3.vel || 0) * .02, fine = !mobile;
     for (let i = 0; i < N; i++) {
       const j = i * 3;
-      a[j + 1] += (.06 + seed[i] * .1) * dt - v * (.4 + seed[i]);
-      a[j + 2] += Math.abs(v) * (.6 + seed[i]) * 2;
-      if (a[j + 1] > 8) a[j + 1] = -8; if (a[j + 1] < -8) a[j + 1] = 8;
-      if (a[j + 2] > 1.5) a[j + 2] = -14;
+      base[j + 1] += (.06 + seed[i] * .1) * dt - v * (.4 + seed[i]);
+      base[j + 2] += Math.abs(v) * (.6 + seed[i]) * 2;
+      if (base[j + 1] > 8) base[j + 1] = -8; if (base[j + 1] < -8) base[j + 1] = 8;
+      if (base[j + 2] > 1.5) base[j + 2] = -14;
+      let tx = 0, ty = 0;
+      if (fine) {
+        const k = (10 - base[j + 2]) / 10, px = mx * halfW * k, py = -my * halfH * k;
+        const dx = base[j] - px, dy = base[j + 1] - py, dd = Math.hypot(dx, dy), R = 1.6 * k;
+        if (dd < R && dd > .001) { const f = (R - dd) / R; tx = dx / dd * f * R * .9; ty = dy / dd * f * R * .9; }
+      }
+      offX[i] += (tx - offX[i]) * Math.min(1, dt * 6); offY[i] += (ty - offY[i]) * Math.min(1, dt * 6);
+      a[j] = base[j] + offX[i]; a[j + 1] = base[j + 1] + offY[i]; a[j + 2] = base[j + 2];
     }
     pg.attributes.position.needsUpdate = true;
-    pts.rotation.y = mx * .05 + time * .01; pts.rotation.x = my * .03;
+    pts.rotation.y = 0; pts.rotation.x = 0;
 
     if (needPick && !drag) { needPick = false; hover = pick(); V3.hoverLogo = hover; }
     if (hover && C.op < .5) { hover = false; V3.hoverLogo = false; }

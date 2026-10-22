@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vetra — Tecnologia com direção</title>
 <meta name="description" content="A Vetra constrói sites que trazem clientes, sistemas que organizam o negócio e dashboards que mostram os números. Preço fechado, design aprovado antes do código.">
-<meta name="theme-color" content="#07090D">
+<meta name="theme-color" content="#EEF0F4">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vetra — Tecnologia com direção">
 <meta property="og:description" content="Sites, sistemas e dashboards sob medida para pequenas e médias empresas.">
@@ -157,6 +157,7 @@
           <p class="lk">Continue rolando para ver cada uma em ação.</p>
           <span class="panel__hint lk" aria-hidden="true">role <svg><use href="#i-arrow"/></svg></span>
         </div>
+
 
         <article class="panel svc">
           <div class="svc__text">
@@ -337,46 +338,63 @@
     </div>
   </section>
 
-  <!-- PROCESSO -->
-  <section class="process" id="processo" data-hud="Processo">
-    <div class="wrap process__grid">
-      <div class="process__head">
-        <span class="eyebrow lk"><span class="dec" data-text="// 05 · processo">// 05 · processo</span></span>
-        <h2 class="lk">Do primeiro papo ao site no ar, em quatro <em>commits.</em></h2>
-        <p class="lk">Você sabe o que está acontecendo em cada etapa e aprova antes de seguir para a próxima.</p>
-        <a class="btn btn--sky magnet lk" href="#contato">Começar meu projeto <svg><use href="#i-arrow"/></svg></a>
+  <!-- PROCESSO: o site sendo construído na rolagem -->
+  <section class="build" id="processo" data-hud="Processo" data-step="0">
+    <div class="sticky build__sticky">
+      <div class="wrap build__grid">
+        <div class="build__copy">
+          <span class="eyebrow lk"><span class="dec" data-text="// 05 · processo">// 05 · processo</span></span>
+          <h2 class="lk">Seu site,<br><em>nascendo.</em></h2>
+          <ol class="steps lk" id="steps">
+            <li class="step" data-n="01"><b>Diagnóstico</b><p>Uma conversa para entender o seu negócio. Daqui sai o rascunho do que o site precisa ter.</p><span>Entrega: escopo, prazo e preço fechados</span><i></i></li>
+            <li class="step" data-n="02"><b>Design no Figma</b><p>Desenhamos o layout e você comenta e aprova. Nenhuma linha de código antes do seu "pode seguir".</p><span>Entrega: layout aprovado</span><i></i></li>
+            <li class="step" data-n="03"><b>Desenvolvimento</b><p>Cores, fotos e textos ganham vida em código feito à mão, rápido em qualquer celular.</p><span>Entrega: versão de teste para revisar</span><i></i></li>
+            <li class="step" data-n="04"><b>No ar e medindo</b><p>Publicamos no seu domínio, ligamos Analytics e Pixel e acompanhamos os primeiros clientes chegando.</p><span>Entrega: site no ar e medindo</span><i></i></li>
+          </ol>
+        </div>
+
+        <div class="build__stage" aria-hidden="true">
+          <div class="bw">
+            <div class="bw__bar">
+              <span class="bw__dots"><i></i><i></i><i></i></span>
+              <span class="bw__url"><svg viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><em id="bwUrl">rascunho · papel e caneta</em></span>
+              <span class="bw__st" id="bwSt">rascunho</span>
+            </div>
+            <div class="bw__page">
+              <div class="b-nav">
+                <span class="b b-logo" data-l="logo" style="--i:0">Aurora<i>.</i></span>
+                <span class="b-links"><span class="b" data-l="menu" style="--i:1">Cardápio</span><span class="b" style="--i:1">Sobre</span><span class="b" style="--i:1">Contato</span></span>
+                <span class="b b-pill" data-l="botão" style="--i:2">Pedir agora</span>
+              </div>
+              <div class="b-hero">
+                <div class="b-hero__txt">
+                  <span class="b b-kick" data-l="etiqueta" style="--i:2">Café especial · Centro</span>
+                  <span class="b b-h1" data-l="título" style="--i:3">Café de verdade, pertinho de você.</span>
+                  <span class="b b-p" data-l="texto" style="--i:4">Grãos especiais, torra da casa e pão de queijo saindo do forno.</span>
+                  <span class="b b-cta" data-l="botão WhatsApp" style="--i:5"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z" fill="currentColor"/></svg>Pedir no WhatsApp</span>
+                </div>
+                <span class="b b-img" data-l="foto" style="--i:4"><i class="cup"></i></span>
+              </div>
+              <div class="b-cards">
+                <span class="b b-card" data-l="card" style="--i:6"><b>Cardápio</b><small>32 itens</small></span>
+                <span class="b b-card" data-l="card" style="--i:7"><b>Horários</b><small>7h às 20h</small></span>
+                <span class="b b-card" data-l="card" style="--i:8"><b>Como chegar</b><small>Rua das Flores, 120</small></span>
+              </div>
+            </div>
+            <span class="bw__sel" style="--i:0"><i></i><i></i><i></i><i></i></span>
+            <span class="bw__cur"><svg viewBox="0 0 24 24"><path d="M4 3l16 8-7 2-3 7z"/></svg><em>Você</em></span>
+            <span class="bw__note">Ficou ótimo, pode seguir! ✓</span>
+          </div>
+          <div class="bw__code mono" id="bwCode"><span>$ npm run build</span><b>✓ pronto em 0,8 s</b></div>
+          <ul class="bw__pings" id="bwPings">
+            <li><b>Novo pedido no WhatsApp</b><span>2 cafés + pão de queijo</span></li>
+            <li><b>Pedido de orçamento</b><span>café para evento · 40 pessoas</span></li>
+            <li><b>Google: nota 98</b><span>velocidade no celular</span></li>
+          </ul>
+          <div class="bw__live" id="bwLive"><i></i><span><b id="bwVis">0</b> visitas hoje</span></div>
+        </div>
       </div>
-      <ol class="commits" id="commits">
-        <span class="commits__line" aria-hidden="true"><i id="commitFill"></i></span>
-        <li class="commit">
-          <span class="commit__dot" aria-hidden="true"></span>
-          <code><b>a1f3c9e</b> git init</code>
-          <h3>Diagnóstico</h3>
-          <p>Uma conversa para entender o seu negócio, o seu público e o que precisa acontecer para o projeto dar resultado.</p>
-          <span class="commit__out">Entrega: escopo, prazo e preço fechados</span>
-        </li>
-        <li class="commit">
-          <span class="commit__dot" aria-hidden="true"></span>
-          <code><b>7c2e81b</b> git checkout -b design</code>
-          <h3>Design no Figma</h3>
-          <p>Desenhamos o layout e você acompanha, comenta e aprova. Nenhuma linha de código antes do seu "pode seguir".</p>
-          <span class="commit__out">Entrega: layout aprovado</span>
-        </li>
-        <li class="commit">
-          <span class="commit__dot" aria-hidden="true"></span>
-          <code><b>e94d0a3</b> git commit</code>
-          <h3>Desenvolvimento</h3>
-          <p>Código feito à mão: rápido, funcionando em qualquer celular e preparado para aparecer no Google.</p>
-          <span class="commit__out">Entrega: versão de teste para revisar</span>
-        </li>
-        <li class="commit">
-          <span class="commit__dot" aria-hidden="true"></span>
-          <code><b>f05b6d2</b> git push</code>
-          <h3>No ar e medindo</h3>
-          <p>Publicamos no seu domínio, configuramos Analytics e Pixel e acompanhamos os primeiros resultados.</p>
-          <span class="commit__out">Entrega: site no ar e medindo</span>
-        </li>
-      </ol>
+      <div class="build__bar"><i id="buildBar"></i></div>
     </div>
   </section>
 
@@ -505,6 +523,11 @@
         <span class="eyebrow lk"><span class="dec" data-text="// 08 · dúvidas">// 08 · dúvidas</span></span>
         <h2 class="lk">Perguntas <em>frequentes.</em></h2>
         <p class="lk">Não encontrou a sua? Mande uma mensagem e a gente responde.</p>
+        <a class="faq__help lk" href="https://wa.me/5535997183927?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20site." target="_blank" rel="noopener">
+          <span class="faq__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.9 2.3 1 2.5c.1.2 1.7 2.6 4.1 3.6 1.5.7 2.1.7 2.9.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
+          <span class="faq__t"><b>Ainda com dúvida?</b><small>Fale direto com a gente no WhatsApp</small></span>
+          <svg class="faq__go"><use href="#i-arrow"/></svg>
+        </a>
       </div>
       <div class="faq__list lk">
         <div class="qa is-open"><button type="button" aria-expanded="true">Quanto tempo leva para o site ficar pronto?<span class="qa__ic" aria-hidden="true"></span></button>
@@ -528,6 +551,7 @@
   <!-- CONTATO -->
   <section class="contact" id="contato" data-hud="Contato">
     <div class="contact__hero wrap">
+      <div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
       <span class="eyebrow lk"><span class="dec" data-text="// 09 · 100% desbloqueado">// 09 · 100% desbloqueado</span></span>
       <h2 class="lk">Você desbloqueou tudo. Agora é a vez do seu <em>negócio.</em></h2>
     </div>

@@ -196,10 +196,10 @@
     M.svc = top(svc); M.svcLen = svc.offsetHeight - vh;
     M.xray = top(xray); M.xrayH = xray.offsetHeight;
     M.proc = top(proc); M.cont = top(contato); M.cases = top(casesEl); M.casesLen = casesEl.offsetHeight - vh;
-    const P = (o) => Object.assign({ x: 0, y: 0, s: 1, rx: 0, ry: 0, split: 0, wire: 0, op: 1 }, o);
+    const P = (o) => Object.assign({ x: 0, y: 0, s: 1, rx: 0, ry: 0, split: 0, wire: 0, op: 1, dust: 0 }, o);
     const TAU = Math.PI * 2;
     const m = M.man, L = M.manLen;
-    const hero = mobile ? P({ y: .3, s: .92 }) : P({ y: .2, s: 1 });
+    const hero = mobile ? P({ y: .3, s: .92 }) : P({ x: .44, y: .26, s: .94, ry: -.25 });
     const side = mobile ? P({ y: -.42, s: .6, ry: .45 }) : P({ x: .5, y: 0, s: .95, ry: .45 });
     KF = [
       Object.assign({ at: 0 }, hero),
@@ -212,20 +212,22 @@
       ...(mobile ? [
         Object.assign({ at: M.xray - vh * .7 }, P({ y: .42, s: .62, ry: TAU * 2 + 2.4, op: 0 })),
         Object.assign({ at: M.xray - vh * .05 }, P({ y: .42, s: .62, ry: TAU * 3, op: 1 })),
-        Object.assign({ at: M.xray + vh * .3 }, P({ y: .55, s: .62, ry: TAU * 3 + .5, wire: 1, op: 1 })),
-        Object.assign({ at: M.xray + vh * .6 }, P({ y: .8, s: .55, ry: TAU * 3 + 1, wire: 1, op: 0 }))
+        Object.assign({ at: M.xray + vh * .25 }, P({ y: .62, s: .6, ry: TAU * 3 + .5, wire: 1, op: 1 })),
+        Object.assign({ at: M.xray + vh * .45 }, P({ y: 1.05, s: .55, ry: TAU * 3 + 1, wire: 1, op: 0 }))
       ] : [
         Object.assign({ at: M.xray - vh * .7 }, P({ x: .5, s: .92, ry: TAU * 2 + 2.4, op: 0 })),
         Object.assign({ at: M.xray - vh * .1 }, P({ x: .5, s: .92, ry: TAU * 3, op: 1 })),
         Object.assign({ at: M.xray + M.xrayH - vh * 1.1 }, P({ x: .5, s: .92, ry: TAU * 3 + .5, wire: 1, op: 1 })),
         Object.assign({ at: M.cases - vh * .25 }, P({ x: .5, s: .7, ry: TAU * 3 + 1.4, wire: 1, op: 0 }))
       ]),
-      Object.assign({ at: M.cont - vh * .6 }, P({ y: .42, s: .7, ry: TAU * 4 - 1, op: 0 })),
-      Object.assign({ at: M.cont + vh * .05 }, P({ y: mobile ? .38 : .34, s: mobile ? .8 : .95, ry: TAU * 4, op: 1 })),
-      Object.assign({ at: M.cont + vh * .75 }, P({ y: mobile ? .9 : .9, s: .75, ry: TAU * 4 + .6, op: 0 }))
+      Object.assign({ at: M.cont - vh * .55 }, P({ y: mobile ? .5 : .52, s: mobile ? .62 : .66, ry: TAU * 4 - 1.5, op: 0, dust: 1 })),
+      Object.assign({ at: M.cont - vh * .2 }, P({ y: mobile ? .5 : .52, s: mobile ? .62 : .66, ry: TAU * 4 - 1, op: 1, dust: 1 })),
+      Object.assign({ at: M.cont + vh * .12 }, P({ y: mobile ? .5 : .52, s: mobile ? .62 : .66, ry: TAU * 4, op: 1, dust: 0 })),
+      Object.assign({ at: M.cont + vh * .5 }, P({ y: (mobile ? .5 : .52) + .76, s: mobile ? .62 : .66, ry: TAU * 4 + .5, op: .6 })),
+      Object.assign({ at: M.cont + vh * .65 }, P({ y: (mobile ? .5 : .52) + 1.06, s: mobile ? .62 : .66, ry: TAU * 4 + .6, op: 0 }))
     ];
   };
-  const KEYS = ['x', 'y', 's', 'rx', 'ry', 'split', 'wire', 'op'];
+  const KEYS = ['x', 'y', 's', 'rx', 'ry', 'split', 'wire', 'op', 'dust'];
   const sample = (y) => {
     const out = V3.t;
     if (!KF.length) return;
@@ -286,8 +288,61 @@
   }, 500);
   setTimeout(() => { if (!V3.ready) root.classList.add('no-gl'); }, 4000);
 
+  /* ---------- Títulos: letras sobem e a barra azul se desenha (estilo Lusion) ---------- */
+  const auraEl = $('.aura'), marqEl = $('.marquee'); let skew = 0;
+  const splitChars = (el) => {
+    let ci = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.append(' '); return; }
+            const wd = document.createElement('span'); wd.className = 'wd';
+            [...part].forEach(ch => { const c = document.createElement('span'); c.className = 'ch'; c.textContent = ch; c.style.setProperty('--ci', ci++); wd.append(c); });
+            frag.append(wd);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+      });
+    };
+    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    walk(el); el.classList.add('chs'); el.style.setProperty('--n', ci);
+  };
+  if (!reduce) $$('[data-hud] h2, .hero__title .ln > span').forEach(splitChars);
+
+  /* ---------- Bordas que acendem seguindo o mouse (estilo Linear) ---------- */
+  if (matchMedia('(pointer: fine)').matches) {
+    addEventListener('pointermove', (e) => {
+      const el = e.target.closest && e.target.closest('.spot');
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--sx', (e.clientX - r.left) + 'px'); el.style.setProperty('--sy', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+    $$('.plan:not(.plan--top), .qa, .case, .sim__step, .way, .care, .stat, .step').forEach(el => el.classList.add('spot'));
+    // palco do processo inclina em 3D com o mouse
+    const bwEl = $('.bw'), stageEl = $('.build__stage');
+    if (bwEl) addEventListener('pointermove', (e) => {
+      const r = stageEl.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const x = clamp((e.clientX - (r.left + r.width / 2)) / r.width, -1, 1), y = clamp((e.clientY - (r.top + r.height / 2)) / r.height, -1, 1);
+      stageEl.style.setProperty('--tx', (x * 8).toFixed(2) + 'deg'); stageEl.style.setProperty('--ty', (-y * 6).toFixed(2) + 'deg');
+    }, { passive: true });
+  }
+
+  /* ---------- Aura do topo reage ao mouse ---------- */
+  const glowEl = $('#glow');
+  if (glowEl && matchMedia('(pointer: fine)').matches) addEventListener('pointermove', (e) => {
+    glowEl.style.setProperty('--gx', ((e.clientX / innerWidth - .5) * 60).toFixed(1) + 'px');
+    glowEl.style.setProperty('--gy', ((e.clientY / innerHeight - .5) * 40).toFixed(1) + 'px');
+  }, { passive: true });
+
   /* ---------- Processo ---------- */
-  const commitsEl = $('#commits'), commitFill = $('#commitFill'), commitItems = $$('.commit');
+  const buildEl = $('#processo'), buildBar = $('#buildBar'), stepEls = $$('.step'), bwUrl = $('#bwUrl'), bwSt = $('#bwSt'), bwVis = $('#bwVis');
+  const URLS = ['rascunho · papel e caneta', 'figma.com/layout-aurora', 'teste.vetra.dev.br', 'cafeaurora.com.br'];
+  const STS = ['rascunho', 'em aprovação', 'em teste', 'no ar'];
+  let lastStep = -1, visT = 0;
 
 
   /* ---------- Portfólio 3D (CSS 3D, guiado pela rolagem) ---------- */
@@ -479,9 +534,28 @@
     if (cp !== lastCp && Math.abs(y - M.cases) < M.casesLen + vh * 2) { lastCp = cp; casesFrame(cp); }
 
     // processo
-    const r = commitsEl.getBoundingClientRect(), mid = vh * .62;
-    commitFill.style.transform = `scaleY(${clamp((mid - r.top) / r.height, 0, 1)})`;
-    commitItems.forEach(c => c.classList.toggle('on', c.getBoundingClientRect().top < mid));
+    {
+      const r = buildEl.getBoundingClientRect(), len = Math.max(1, buildEl.offsetHeight - vh);
+      const bp = clamp(-r.top / len, 0, 1), st = Math.min(3, Math.floor(bp * 4.0001));
+      buildBar.style.transform = `scaleX(${bp})`;
+      stepEls.forEach((el, i) => el.style.setProperty('--sp', clamp(bp * 4 - i, 0, 1)));
+      if (st !== lastStep) {
+        lastStep = st; buildEl.dataset.step = st;
+        stepEls.forEach((el, i) => { el.classList.toggle('on', i === st); el.classList.toggle('done', i < st); });
+        bwUrl.textContent = URLS[st]; bwSt.textContent = STS[st];
+        if (st === 3 && !visT) { visT = 1; let v = 0; const iv = setInterval(() => { v += 7 + Math.round(Math.random() * 9); if (v >= 248) { v = 248; clearInterval(iv); } bwVis.textContent = v; }, 40); }
+      }
+    }
+
+    // contato: o bloco azul cresce até ocupar a tela (estilo Apple)
+    if (auraEl) {
+      const ar = auraEl.parentElement.getBoundingClientRect();
+      auraEl.parentElement.style.setProperty('--ap', clamp((vh - ar.top) / (vh * .85), 0, 1).toFixed(3));
+      const xr = xray.getBoundingClientRect();
+      root.classList.toggle('gl-front', (ar.top < vh * .12 && ar.bottom > vh * .2) || (xr.top < vh * .98 && xr.bottom > vh * .05));
+    }
+    // faixa inclina com a velocidade da rolagem (estilo Active Theory)
+    if (marqEl && !reduce) { skew += (clamp(-V3.vel * .35, -10, 10) - skew) * .12; marqEl.style.transform = `skewY(${(skew * .25).toFixed(2)}deg) skewX(${skew.toFixed(2)}deg)`; }
 
     // desbloqueios
     for (const s of hudSecsArr) if (!s.classList.contains('is-unlocked') && s.getBoundingClientRect().top < vh * .62) unlock(s, !root.classList.contains('ready'));
